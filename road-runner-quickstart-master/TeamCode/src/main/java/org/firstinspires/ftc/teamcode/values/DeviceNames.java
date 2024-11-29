@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.systems.values;
+package org.firstinspires.ftc.teamcode.values;
 
 public class DeviceNames {
     public static final String LEFT_ELEVATOR_NAME = "le";

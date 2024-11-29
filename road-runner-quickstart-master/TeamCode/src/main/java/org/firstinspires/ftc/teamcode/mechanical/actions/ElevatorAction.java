@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.systems;
+package org.firstinspires.ftc.teamcode.mechanical.actions;
 
 import androidx.annotation.NonNull;
 
@@ -11,17 +11,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.teamcode.systems.values.DeviceNames;
-import org.firstinspires.ftc.teamcode.systems.values.PIDValues;
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
+import org.firstinspires.ftc.teamcode.values.PIDValues;
 
-public class Elevator {
+public class ElevatorAction {
     private DcMotorEx leftMotor;
     private DcMotorEx rightMotor;
     private TouchSensor touchSensor;
     private PIDFCoefficients pid;
     public double currentHeight;
 
-    public Elevator(HardwareMap map){
+    public ElevatorAction(HardwareMap map){
         leftMotor = map.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
         rightMotor = map.get(DcMotorEx.class, DeviceNames.RIGHT_ELEVATOR_NAME);
         touchSensor = map.get(TouchSensor.class, DeviceNames.ELEVATOR_TOUCH_SENSOR);
