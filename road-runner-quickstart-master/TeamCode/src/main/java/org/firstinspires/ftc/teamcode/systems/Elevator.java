@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.teamcode.systems.values.DeviceNames;
-import org.firstinspires.ftc.teamcode.systems.values.PIDValues;
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
+import org.firstinspires.ftc.teamcode.values.PIDValues;
 
 public class Elevator {
     private DcMotorEx leftMotor;
@@ -24,7 +24,7 @@ public class Elevator {
     public Elevator(HardwareMap map){
         leftMotor = map.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
         rightMotor = map.get(DcMotorEx.class, DeviceNames.RIGHT_ELEVATOR_NAME);
-        touchSensor = map.get(TouchSensor.class, DeviceNames.ELEVATOR_TOUCH_SENSOR);
+        touchSensor = map.get(TouchSensor.class, DeviceNames.ELEVATOR_TOUCH_SENSOR_NAME);
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         pid = new PIDFCoefficients(PIDValues.P_OF_ELEVATOR, PIDValues.I_OF_ELEVATOR, PIDValues.D_OF_ELEVATOR, PIDValues.F_OF_ELEVATOR);
