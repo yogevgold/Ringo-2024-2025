@@ -8,5 +8,11 @@ public class PIDValues {
     public static final double F_OF_ELEVATOR = 0;
     public static final int CM_TOLERANCE_ELEVATOR = 1;
 
+    public static final double P_OF_INTAKE = 0;
+    public static final double I_OF_INTAKE = 0;
+    public static final double D_OF_INTAKE = 0;
+    public static final double IZONE_OF_INTAKE = 0;
+    public static final double F_OF_INTAKE = 0;
+    public static final double RPM_TOLERANCE_INTAKE = 5;
 
 }
