@@ -11,10 +11,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.values.DeviceNames;
 import org.firstinspires.ftc.teamcode.values.PIDValues;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class IntakeAction {
@@ -26,6 +29,7 @@ public class IntakeAction {
     private DistanceSensor sempleCheck;
     private TouchSensor turnIntakeServoInitializer;
     private PIDFCoefficients pid;
+    private ElapsedTime timer;
 
     private double realDifLocation;
     private double startLocation;
@@ -45,6 +49,9 @@ public class IntakeAction {
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         pid = new PIDFCoefficients(PIDValues.P_OF_INTAKE, PIDValues.I_OF_INTAKE, PIDValues.D_OF_INTAKE, PIDValues.F_OF_INTAKE);
+        timer = new ElapsedTime();
+        timer.startTime();
+
         IntakeMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pid);
 
         startLocation = RightIntakeServo.getPosition();
@@ -76,26 +83,40 @@ public class IntakeAction {
         };
     }
 
-    public Action AutonomouSempleDeliver() {
+    public Action AutonomouSampleDeliver() {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                intakeSpin(1);
+                boolean isFinished = false;
+                boolean isReadyToOutput = false;
                 if(sempleCheck.getDistance(DistanceUnit.CM) < 5) { // השערה של מרחק
                     intakeSpin(0.3);
-                    LeftIntakeServo.setPosition(LeftIntakeServo.getPosition() + 0.01);
-                    RightIntakeServo.setPosition(RightIntakeServo.getPosition() + 0.01);
-                    if (turnIntakeServoInitializer.isPressed()) {
-                        LeftIntakeServo.setPosition(LeftIntakeServo.getPosition());
-                        RightIntakeServo.setPosition(RightIntakeServo.getPosition());
-                    }
-                    intakeSpin(-0.7);
-                    LeftIntakeServo.setPosition(LeftIntakeServo.getPosition() - 0.4);
-                    RightIntakeServo.setPosition(RightIntakeServo.getPosition() - 0.4);
-                    intakeSpin(0);
+                    double locOfServo = LeftIntakeServo.getPosition();
+                    LeftIntakeServo.setPosition(LeftIntakeServo.getPosition() + 0.4);
+                    RightIntakeServo.setPosition(RightIntakeServo.getPosition() + 0.4);
+                    isReadyToOutput = (locOfServo+0.4 == LeftIntakeServo.getPosition());
                 }
-                return sempleCheck.getDistance(DistanceUnit.CM) < 5;
+                boolean once = true;
+                if(once){timer.reset();
+                once = false;}
+
+                if(isReadyToOutput){
+                    intakeSpin(-0.7);
+                    if(timer.time(TimeUnit.SECONDS) >= 1 ) {
+                        LeftIntakeServo.setPosition(LeftIntakeServo.getPosition() - 0.4);
+                        RightIntakeServo.setPosition(RightIntakeServo.getPosition() - 0.4);
+                    }
+                    isFinished = true;
+                }
+                else {
+                    intakeSpin(1);
+                }
+                if(timer.time(TimeUnit.SECONDS) >= 1 && timer.time(TimeUnit.SECONDS) <= 1.5){
+                    intakeSpin(0);}
+                return isFinished;
             }
+
         };
     }
+
 }
