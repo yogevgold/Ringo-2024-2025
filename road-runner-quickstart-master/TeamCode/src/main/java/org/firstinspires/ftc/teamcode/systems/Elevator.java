@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.values.DeviceNames;
-import org.firstinspires.ftc.teamcode.values.PIDValues;
+import org.firstinspires.ftc.teamcode.values.Values;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +36,7 @@ public class Elevator {
         rightHook = map.get(Servo.class, DeviceNames.RIGHT_HOOK_NAME);
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        pid = new PIDFCoefficients(PIDValues.P_OF_ELEVATOR, PIDValues.I_OF_ELEVATOR, PIDValues.D_OF_ELEVATOR, PIDValues.F_OF_ELEVATOR);
+        pid = new PIDFCoefficients(Values.P_OF_ELEVATOR, Values.I_OF_ELEVATOR, Values.D_OF_ELEVATOR, Values.F_OF_ELEVATOR);
         //קביעת ערכי משוואת הpid מהתיקייה של הערכים הקבועים PIDValues
         timer = new ElapsedTime();
         timer.startTime();
@@ -44,7 +44,7 @@ public class Elevator {
         rightMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pid);
         //קובע את אופן העובדה של המנוע - או הרצה לפי מהירות או לפי מיקום.
         //מעלית לדוגמא זה לפי מיקום מכיוון שרצים לפי גובה (סם) אבל איסוף זה מהירות מכיוון שרצים לפי המהירות של המערכת. ויישום ערכי הpid שקבענו מקודם.
-        leftMotor.setTargetPositionTolerance(PIDValues.CM_TOLERANCE_ELEVATOR);
+        leftMotor.setTargetPositionTolerance(Values.CM_TOLERANCE_ELEVATOR);
         //קביעה של כמות הסבל שלהpid
 
         currentHeight = 0;
@@ -93,8 +93,8 @@ public class Elevator {
                 //נסיעה אחורה
                 setMotorsByLocation(0);
                 rightHook.setPosition(rightHook.getPosition() + 0.6);
-                leftHook.setPosition(leftHook.getPosition() + 0.6);
-                return false;
+                leftHook.setPosition(Values.CLIMB_LOCKED);
+                return leftHook.getPosition() == Values.CLIMB_LOCKED;
             }
         };
     }
@@ -111,7 +111,7 @@ public class Elevator {
                     leftHook.setPosition(leftHook.getPosition() - 0.6);
                     setMotorsByLocation(0);
                 }
-                return false;
+                return leftMotor.getCurrentPosition() == 0;
             }
         };
     }

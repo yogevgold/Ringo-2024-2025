@@ -18,6 +18,9 @@ public class DeviceNames {
     public static final String FUNNEL_NAME = "funnle";
     public static final String LEFT_HOOK_NAME = "left hook";
     public static final String RIGHT_HOOK_NAME = "right hook";
+    public static final String LIME_LIGHT = "cam 1";
+
+
 
 
 
