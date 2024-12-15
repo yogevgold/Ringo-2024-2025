@@ -70,6 +70,11 @@ public class IntakeAction {
         IntakeMotor.setPower(pow);
     }
 
+    public void horizontalslides(double angle) {
+        LeftHorizontalSlide.setPosition(LeftHorizontalSlide.getPosition() + angle / 180);
+        RightHorizontalSlide.setPosition(RightHorizontalSlide.getPosition() + angle / 180);
+    }
+
     public Action IntakeServoInit(){
         return new Action() {
             @Override
@@ -119,4 +124,13 @@ public class IntakeAction {
         };
     }
 
+    public Action HorizontalAngleSlide(double Angle) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                horizontalslides(Angle);
+                return false;
+            }
+        };
+    }
 }
