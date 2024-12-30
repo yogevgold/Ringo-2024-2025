@@ -26,7 +26,7 @@ public class Elevator {
     private TouchSensor touchSensor;
     private ElapsedTime  timer;
     private PIDFCoefficients pid;
-    public double currentHeight;
+    public int currentHeight;
 
     public Elevator(HardwareMap map){
         leftMotor = map.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
@@ -59,28 +59,23 @@ public class Elevator {
         rightMotor.setTargetPosition(location);
     }
 
-    public Action moveToZero(boolean opModeIsActive) {
+    public Action moveToZero() {
         return new Action() {
 
             @Override
             public boolean run (@NonNull TelemetryPacket telemetryPacket) {
-
-                if(touchSensor.isPressed()){
-                    currentHeight = 0;
-                }
-                else powerMotors(-0.15);
-                return !opModeIsActive;
+                powerMotors(-0.05);
+                if(touchSensor.isPressed()){currentHeight=0;}
+                return touchSensor.isPressed();
             }
         };
     }
-    public Action moveCM(int cm, boolean opModeisActive) {
+    public Action moveCM(double pow) {
         return new Action() {
 
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                setMotorsByLocation(cm);
-                telemetryPacket.put("Current left Location: ", leftMotor.getCurrentPosition());
-                telemetryPacket.put("Current right Location", rightMotor.getCurrentPosition());
-                return opModeisActive;
+                powerMotors(pow);
+                return false;
             }
         };
     }

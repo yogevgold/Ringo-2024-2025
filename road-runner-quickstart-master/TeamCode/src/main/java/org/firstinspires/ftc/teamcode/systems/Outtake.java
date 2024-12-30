@@ -12,27 +12,27 @@ import org.firstinspires.ftc.teamcode.values.DeviceNames;
 import org.firstinspires.ftc.teamcode.values.Values;
 
 public class Outtake {
-    private Servo funnel;
+    private Servo Rightfunnel;
+    private Servo Leftfunnel;
+
 
     public Outtake(HardwareMap map) {
-        funnel = map.get(Servo.class, DeviceNames.FUNNEL_NAME);
-    }
-    public Action sampleIntoBucket() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                funnel.setPosition(Values.FUNNEL_OPEN);
-                return funnel.getPosition() == Values.FUNNEL_OPEN;
-            }
-        };
+        Rightfunnel = map.get(Servo.class, DeviceNames.RIGHT_FUNNEL_NAME);
+        Leftfunnel = map.get(Servo.class, DeviceNames.LEFT_FUNNEL_NAME);
+        Leftfunnel.setDirection(Servo.Direction.REVERSE);
+
     }
 
-    public Action funnleInPlace() {
+    public void MoveFunnel(double FunnelPos){
+        Leftfunnel.setPosition(FunnelPos);
+        Rightfunnel.setPosition(FunnelPos);
+    }
+    public Action Funnels(double val) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                funnel.setPosition(Values.FUNNEL_CLOSED);
-                return funnel.getPosition() == Values.FUNNEL_CLOSED;
+                MoveFunnel(val);
+                return true;
             }
         };
     }

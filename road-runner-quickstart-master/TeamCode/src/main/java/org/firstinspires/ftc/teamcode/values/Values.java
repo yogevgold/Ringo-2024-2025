@@ -23,4 +23,7 @@ public class Values {
     public static final int SECOUND_BUCKET_HEIGHT_CM = 117;
 
     public static final double DISTANCE_SAMPLE_CHECK = 5;
+    public static final double SLIDES_OPEN = 30;
+    public static final double SLIDES_CLOSED = 0;
+
 }
