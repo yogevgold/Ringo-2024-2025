@@ -73,6 +73,13 @@ public class actionMerge extends LinearOpMode {
                 ));
             }
             else telemetry.addLine("");
+            if(gamepad1.b){
+                newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.9)));
+            }
+            else if(gamepad1.a){
+                newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.6)));
+            }
+            //updated TODO: remove after first competition, for git testing purposes
 
 /*
             if(gamepad1.a) elevatorHeightCM = 0;
