@@ -15,13 +15,12 @@ public class DeviceNames {
     public static final String FRONT_RIGHT_NAME = "fr";
     public static final String BACK_LEFT_NAME = "bl";
     public static final String BACK_RIGHT_NAME = "br";
-    public static final String FUNNEL_NAME = "funnle";
+    public static final String LEFT_FUNNEL_NAME = "left funnle";
+    public static final String RIGHT_FUNNEL_NAME = "right funnle";
+
     public static final String LEFT_HOOK_NAME = "left hook";
     public static final String RIGHT_HOOK_NAME = "right hook";
     public static final String LIME_LIGHT = "cam 1";
-
-
-
 
 
 }

@@ -24,7 +24,7 @@ public class Drive {
         frontRight = map.get(DcMotorEx.class, DeviceNames.FRONT_RIGHT_NAME);
         backLeft = map.get(DcMotorEx.class, DeviceNames.BACK_LEFT_NAME);
         backRight = map.get(DcMotorEx.class, DeviceNames.BACK_RIGHT_NAME);
-        LimeLight = map.get(Limelight3A.class, DeviceNames.LIME_LIGHT);
+        //LimeLight = map.get(Limelight3A.class, DeviceNames.LIME_LIGHT);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
