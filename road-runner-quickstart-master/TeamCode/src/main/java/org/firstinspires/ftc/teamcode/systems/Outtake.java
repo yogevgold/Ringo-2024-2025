@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.values.DeviceNames;
 import org.firstinspires.ftc.teamcode.values.Values;
 
 public class Outtake {
-    private Servo Rightfunnel;
+    public Servo Rightfunnel;
     private Servo Leftfunnel;
 
 
