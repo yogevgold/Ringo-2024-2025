@@ -57,28 +57,38 @@ public class actionMerge extends LinearOpMode {
             telemetry.update();
             List<Action> newActions = new ArrayList<>();
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.dpad_left) {
                 telemetry.addLine("dpadUp pressed");
                 newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(0.15)),
+                        new InstantAction(()->intake.horizontalslides(0.7)),
                         new SleepAction(0.5),
                         new InstantAction(()->intake.setIntakeServo(0.07))
                 ));
-            }else if (gamepad2.dpad_down) {
+            }else if (gamepad2.dpad_right) {
                 telemetry.addLine("dpadDown pressed");
                 newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(-0.1)),
+                        new InstantAction(()->intake.horizontalslides(0.9)),
                         new SleepAction(0.5),
-                        new InstantAction(()->intake.setIntakeServo(0.5))
+                        new InstantAction(()->intake.setIntakeServo(0.65))
                 ));
+            }else if (gamepad2.dpad_up) {
+                telemetry.addLine("dpadRight pressed");
+
+                newActions.add(new InstantAction(()->intake.setIntakeServo(0.15)));
             }
             else telemetry.addLine("");
+
             if(gamepad1.b){
                 newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.9)));
             }
             else if(gamepad1.a){
                 newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.6)));
             }
+
+//           if (gamepad2.right_trigger > 0) {
+//                newActions.add(new InstantAction(()->intake.horizontalslides(gamepad2.right_trigger)));
+//                telemetry.addData("pos: ", gamepad2.right_trigger);
+//            }
             //updated TODO: remove after first competition, for git testing purposes
 
 /*
@@ -91,7 +101,7 @@ public class actionMerge extends LinearOpMode {
             contActions = new ParallelAction(
                     drive.TeleDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
                     elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
-                    intake.IntakePower(gamepad1.right_stick_y)
+                    intake.IntakePower(gamepad2.right_stick_y)
                     //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
             );
             TelemetryPacket packet = new TelemetryPacket();
