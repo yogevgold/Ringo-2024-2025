@@ -16,14 +16,18 @@ public class Values {
     public static final double RPM_TOLERANCE_INTAKE = 5;
 
     public static final double CLIMB_LOCKED = 0.6;
-    public static final double FUNNEL_OPEN = 0.4;
-    public static final double FUNNEL_CLOSED = 0;
+    public static final double FUNNEL_OPEN = 0.6;
+    public static final double FUNNEL_CLOSED = 0.9;
 
     public static final int FIRST_BUCKET_HEIGHT_CM = 72;
     public static final int SECOUND_BUCKET_HEIGHT_CM = 117;
 
-    public static final double DISTANCE_SAMPLE_CHECK = 5;
-    public static final double SLIDES_OPEN = 30;
-    public static final double SLIDES_CLOSED = 0;
+    public static final double HOTIZONTAL_SLIDES_OPEN = 0.6;
+    public static final double HOTIZONTAL_SLIDES_CLOSE = 0.9;
+    public static final double INTAKE_CLOSE = 0.6;
+    public static final double INTAKE_UP = 0.15;
+    public static final double INTAKE_DOWN = 0.07;
+
+
 
 }

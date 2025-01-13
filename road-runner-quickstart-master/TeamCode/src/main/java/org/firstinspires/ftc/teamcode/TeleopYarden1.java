@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.systems.values.DeviceNames;
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
+
 
 @TeleOp
 public class TeleopYarden1 extends LinearOpMode {

@@ -40,4 +40,17 @@ public class Drive {
             }
         };
     }
+
+    public Action intakeOpenDrive(double strafe, double move, double turn){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                frontLeft.setPower(move / 2 + strafe / 2 + turn / 2);
+                backLeft.setPower(move / 2 - strafe / 2 + turn / 2);
+                frontRight.setPower(move  / 2- strafe / 2 - turn / 2);
+                backRight.setPower(move / 2 + strafe / 2 - turn / 2);
+                return false;
+            }
+        };
+    }
 }

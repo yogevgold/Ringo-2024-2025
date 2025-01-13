@@ -29,17 +29,18 @@ public class actionMerge extends LinearOpMode {
     private FtcDashboard dash;
     private List<Action> runningActions;
 
+
     @Override
     public void runOpMode() throws InterruptedException {
         dash = FtcDashboard.getInstance();
         runningActions = new ArrayList<>();
         int c = 0;
-
         int elevatorHeightCM = 0;
+        int bCount = 0;
         double Angle = 0;
         double intakePower = 0;
+        boolean intakeOpen = false;
 
-        int bCount = 0;
 
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
@@ -50,40 +51,50 @@ public class actionMerge extends LinearOpMode {
         Action contActions;
         Actions.runBlocking(elevator.moveToZero());
         waitForStart();
-
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
             c++;
             telemetry.addData("C: ", c);
             telemetry.update();
             List<Action> newActions = new ArrayList<>();
 
+
+
             if (gamepad2.dpad_left) {
-                telemetry.addLine("dpadUp pressed");
+                telemetry.addLine("dpadLeft pressed");
+                intakeOpen = true;
                 newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(0.7)),
+                        new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_OPEN)),
                         new SleepAction(0.5),
-                        new InstantAction(()->intake.setIntakeServo(0.07))
+                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
                 ));
             }else if (gamepad2.dpad_right) {
-                telemetry.addLine("dpadDown pressed");
-                newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(0.9)),
-                        new SleepAction(0.5),
-                        new InstantAction(()->intake.setIntakeServo(0.65))
-                ));
-            }else if (gamepad2.dpad_up) {
                 telemetry.addLine("dpadRight pressed");
-
-                newActions.add(new InstantAction(()->intake.setIntakeServo(0.15)));
+                intakeOpen = false;
+                newActions.add(new SequentialAction(
+                        new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_CLOSE)),
+                        new SleepAction(0.5),
+                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
+                ));
+            } else if (gamepad2.dpad_up) {
+                telemetry.addLine("dpadUp pressed");
+                intakeOpen = true;
+                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP)));
+            } else if (gamepad2.dpad_down) {
+                telemetry.addLine("dpadDown pressed");
+                intakeOpen = true;
+                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN)));
             }
             else telemetry.addLine("");
 
+
             if(gamepad1.b){
-                newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.9)));
+                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_CLOSED)));
             }
             else if(gamepad1.a){
-                newActions.add(new InstantAction(()-> outtake.MoveFunnel(0.6)));
+                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_OPEN)));
             }
+
+
 
 //           if (gamepad2.right_trigger > 0) {
 //                newActions.add(new InstantAction(()->intake.horizontalslides(gamepad2.right_trigger)));
@@ -97,26 +108,51 @@ public class actionMerge extends LinearOpMode {
             if (gamepad1.x) elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;
 */
 
+            if (intakeOpen) {
+                contActions = new ParallelAction(
+                        drive.intakeOpenDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
+                        elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
+                        intake.IntakePower(gamepad2.right_stick_y),
+                        intake.IntakePower(-gamepad2.right_trigger / 7)
 
-            contActions = new ParallelAction(
-                    drive.TeleDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
-                    elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
-                    intake.IntakePower(gamepad2.right_stick_y)
-                    //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
-            );
-            TelemetryPacket packet = new TelemetryPacket();
+                        //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
+                );
+                TelemetryPacket packet = new TelemetryPacket();
 
 
-            newActions.add(contActions);
-            for (Action action : runningActions) {
-                action.preview(packet.fieldOverlay());
-                if (action.run(packet)) {
-                    newActions.add(action);
+                newActions.add(contActions);
+                for (Action action : runningActions) {
+                    action.preview(packet.fieldOverlay());
+                    if (action.run(packet)) {
+                        newActions.add(action);
+                    }
                 }
-            }
-            runningActions = newActions;
+                runningActions = newActions;
+                dash.sendTelemetryPacket(packet);
 
-            dash.sendTelemetryPacket(packet);
+            } else if (!intakeOpen) {
+                contActions = new ParallelAction(
+                        drive.TeleDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
+                        elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
+                        intake.IntakePower(gamepad2.right_stick_y),
+                        intake.IntakePower(-gamepad2.right_trigger / 7)
+                        //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
+                );
+                TelemetryPacket packet = new TelemetryPacket();
+
+
+                newActions.add(contActions);
+                for (Action action : runningActions) {
+                    action.preview(packet.fieldOverlay());
+                    if (action.run(packet)) {
+                        newActions.add(action);
+                    }
+                }
+                runningActions = newActions;
+
+                dash.sendTelemetryPacket(packet);
+            }
+
+            }
         }
-    }
 }
