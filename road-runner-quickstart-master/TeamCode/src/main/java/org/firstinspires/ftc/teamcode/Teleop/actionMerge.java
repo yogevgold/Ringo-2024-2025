@@ -92,6 +92,7 @@ public class actionMerge extends LinearOpMode {
             }
             else if(gamepad1.a){
                 newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_OPEN)));
+
             }
 
 
