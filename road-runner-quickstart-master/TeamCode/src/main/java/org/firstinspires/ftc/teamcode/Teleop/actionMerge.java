@@ -41,7 +41,6 @@ public class actionMerge extends LinearOpMode {
         double intakePower = 0;
         boolean intakeOpen = false;
 
-
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
@@ -133,7 +132,7 @@ public class actionMerge extends LinearOpMode {
 
             } else if (!intakeOpen) {
                 contActions = new ParallelAction(
-                        drive.TeleDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
+                        drive.intakeCloseDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
                         elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
                         intake.IntakePower(gamepad2.right_stick_y),
                         intake.IntakePower(-gamepad2.right_trigger / 7)

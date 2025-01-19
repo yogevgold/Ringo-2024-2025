@@ -27,18 +27,20 @@ public class Intake {
     public ServoImplEx LeftIntake;
     public ServoImplEx RightIntake;
 
-    public void setter(double set){
+    public void setter(double set) {
         leftSlide.setPosition(set);
         rightSlide.setPosition(set);
         LeftIntake.setPosition(set);
         RightIntake.setPosition(set);
     }
-    public Intake(HardwareMap map){
+
+    public Intake(HardwareMap map) {
         IntakeMotor = map.get(DcMotorEx.class, DeviceNames.INTAKE_MOTOR_NAME);
-        leftSlide= map.get(ServoImplEx.class, "LHS");
-        rightSlide= map.get(ServoImplEx.class, "RHS");
-        LeftIntake= map.get(ServoImplEx.class, "LIS");
-        RightIntake= map.get(ServoImplEx.class, "RIS");
+        leftSlide = map.get(ServoImplEx.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
+        rightSlide = map.get(ServoImplEx.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
+        LeftIntake = map.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
+        RightIntake = map.get(ServoImplEx.class, DeviceNames.RIGHT_INTAKE_SERVO_NAME);
+
         leftSlide.setPwmRange(new PwmControl.PwmRange(500, 2500));
         rightSlide.setPwmRange(new PwmControl.PwmRange(500, 2500));
         LeftIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
@@ -54,6 +56,7 @@ public class Intake {
 
 //        pid = new PIDFCoefficients(Values.P_OF_INTAKE, Values.I_OF_INTAKE, Values.D_OF_INTAKE, Values.F_OF_INTAKE);
     }
+
     public void setIntakeServo(double position) {
         LeftIntake.setPosition(position);
         RightIntake.setPosition(position);

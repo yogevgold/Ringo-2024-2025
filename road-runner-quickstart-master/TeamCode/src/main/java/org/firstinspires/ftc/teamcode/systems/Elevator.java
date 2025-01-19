@@ -26,6 +26,7 @@ public class Elevator {
     private TouchSensor touchSensor;
     private ElapsedTime  timer;
     private PIDFCoefficients pid;
+
     public int currentHeight;
 
     public Elevator(HardwareMap map){
@@ -50,64 +51,35 @@ public class Elevator {
         currentHeight = 0;
     }
 
-    public void powerMotors(double pow){
+    public void powerMotors(double pow) {
         leftMotor.setPower(pow);
         rightMotor.setPower(pow);
     }
-    public void setMotorsByLocation(int location){
+
+    public void setMotorsByLocation(int location) {
         leftMotor.setTargetPosition(location);
         rightMotor.setTargetPosition(location);
     }
 
     public Action moveToZero() {
         return new Action() {
-
             @Override
             public boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 powerMotors(-0.05);
-                if(touchSensor.isPressed()){currentHeight=0;}
+                if(touchSensor.isPressed()) {
+                    currentHeight = 0;
+                }
                 return touchSensor.isPressed();
             }
         };
     }
     public Action moveCM(double pow) {
         return new Action() {
-
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 powerMotors(pow);
                 return false;
             }
         };
     }
-
-    public Action firstBarPullUp() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                setMotorsByLocation(25);
-                //נסיעה אחורה
-                setMotorsByLocation(0);
-                rightHook.setPosition(rightHook.getPosition() + 0.6);
-                leftHook.setPosition(Values.CLIMB_LOCKED);
-                return leftHook.getPosition() == Values.CLIMB_LOCKED;
-            }
-        };
-    }
-
-    public Action secoundBarPullUp() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                timer.reset();
-                setMotorsByLocation(25);
-                if(timer.time(TimeUnit.SECONDS) >= 1.5 && timer.time(TimeUnit.SECONDS) <= 2) {
-                    setMotorsByLocation(20);
-                    rightHook.setPosition(rightHook.getPosition() - 0.6);
-                    leftHook.setPosition(leftHook.getPosition() - 0.6);
-                    setMotorsByLocation(0);
-                }
-                return leftMotor.getCurrentPosition() == 0;
-            }
-        };
-    }
 }
+

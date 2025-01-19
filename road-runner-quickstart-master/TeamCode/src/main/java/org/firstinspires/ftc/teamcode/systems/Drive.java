@@ -28,7 +28,8 @@ public class Drive {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public Action TeleDrive(double strafe, double move, double turn){
+
+    public Action intakeCloseDrive(double strafe, double move, double turn){
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
