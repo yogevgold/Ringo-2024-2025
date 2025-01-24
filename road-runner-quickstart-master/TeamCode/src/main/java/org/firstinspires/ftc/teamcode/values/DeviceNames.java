@@ -21,6 +21,9 @@ public class DeviceNames {
     public static final String LEFT_HOOK_NAME = "left hook";
     public static final String RIGHT_HOOK_NAME = "right hook";
     public static final String LIME_LIGHT = "cam 1";
-
-
+    public static final String PINCER_GRAB_NAME = "PG";
+    public static final String PINCER_TURN_NAME = "PT";
+    public static final String PINCER_ARM_LEFT_NAME = "PAL";
+    public static final String PINCER_ARM_RIGHT_NAME = "PAR";
+    public static final String PINCER_ROLL_NAME = "PR";
 }

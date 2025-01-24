@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.Outtake;
+import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.values.Values;
 
 import java.util.ArrayList;
@@ -24,8 +25,9 @@ import java.util.List;
 public class actionMerge extends LinearOpMode {
     Drive drive;
     Elevator elevator;
-    Intake intake;
+   Intake intake;
     Outtake outtake;
+    Pincer pincer;
     private FtcDashboard dash;
     private List<Action> runningActions;
 
@@ -45,17 +47,19 @@ public class actionMerge extends LinearOpMode {
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
         outtake = new Outtake(hardwareMap);
+        pincer = new Pincer(hardwareMap);
 
 
         Action contActions;
-        Actions.runBlocking(elevator.moveToZero());
         waitForStart();
         while (opModeIsActive()) {
             c++;
             telemetry.addData("C: ", c);
             telemetry.update();
             List<Action> newActions = new ArrayList<>();
-
+            if(gamepad1.y){elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;}
+            if(gamepad1.b){elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;}
+            if(gamepad1.a){elevatorHeightCM = 0;}
 
 
             if (gamepad2.dpad_left) {
@@ -86,32 +90,18 @@ public class actionMerge extends LinearOpMode {
             else telemetry.addLine("");
 
 
-            if(gamepad1.b){
-                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_CLOSED)));
-            }
-            else if(gamepad1.a){
-                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_OPEN)));
-
-            }
-
-
-
-//           if (gamepad2.right_trigger > 0) {
-//                newActions.add(new InstantAction(()->intake.horizontalslides(gamepad2.right_trigger)));
-//                telemetry.addData("pos: ", gamepad2.right_trigger);
+//            if(gamepad1.b){
+//                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_CLOSED)));
 //            }
-            //updated TODO: remove after first competition, for git testing purposes
+//            else if(gamepad1.a){
+//                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_OPEN)));
+//            }
 
-/*
-            if(gamepad1.a) elevatorHeightCM = 0;
-            if(gamepad1.y) elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
-            if (gamepad1.x) elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;
-*/
 
             if (intakeOpen) {
                 contActions = new ParallelAction(
                         drive.intakeOpenDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
-                        elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
+                        elevator.moveCM(elevatorHeightCM),
                         intake.IntakePower(gamepad2.right_stick_y),
                         intake.IntakePower(-gamepad2.right_trigger / 7)
 
@@ -133,11 +123,11 @@ public class actionMerge extends LinearOpMode {
             } else if (!intakeOpen) {
                 contActions = new ParallelAction(
                         drive.intakeCloseDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
-                        elevator.moveCM(gamepad1.right_trigger - gamepad1.left_trigger),
+                        elevator.moveCM(elevatorHeightCM),
                         intake.IntakePower(gamepad2.right_stick_y),
-                        intake.IntakePower(-gamepad2.right_trigger / 7)
-                        //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
-                );
+                        intake.IntakePower(-gamepad2.right_trigger / 7),
+                        new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x)
+                ));
                 TelemetryPacket packet = new TelemetryPacket();
 
 
@@ -149,10 +139,7 @@ public class actionMerge extends LinearOpMode {
                     }
                 }
                 runningActions = newActions;
-
-                dash.sendTelemetryPacket(packet);
-            }
-
-            }
+                dash.sendTelemetryPacket(packet);            }
         }
+    }
 }

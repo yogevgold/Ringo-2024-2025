@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.BetterGamepad;
 import org.firstinspires.ftc.teamcode.systems.Drive;
+import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.values.DeviceNames;
 
 @TeleOp
@@ -42,24 +43,16 @@ public class TeleopRunOneController extends LinearOpMode {
 
 
     public void hardwareMapNames() {
-        frontLeft = hardwareMap.get(DcMotor.class, DeviceNames.FRONT_LEFT_NAME);
-        frontRight = hardwareMap.get(DcMotor.class, DeviceNames.FRONT_RIGHT_NAME);
-        backLeft = hardwareMap.get(DcMotor.class, DeviceNames.BACK_LEFT_NAME);
-        backRight = hardwareMap.get(DcMotor.class, DeviceNames.BACK_RIGHT_NAME);
-        leftIntakeServo = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
-        rightIntakeServo = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_INTAKE_SERVO_NAME);
-        leftHorizontalServo = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
-        rightHorizontalServo = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
-        //leftFunnel = hardwareMap.get(Servo.class, DeviceNames.LEFT_FUNNEL_NAME);
-        //rightFunnel = hardwareMap.get(Servo.class, DeviceNames.RIGHT_FUNNEL_NAME);
         elevatorRight = hardwareMap.get(DcMotor.class, DeviceNames.RIGHT_ELEVATOR_NAME);
         elevatorLeft = hardwareMap.get(DcMotor.class, DeviceNames.LEFT_ELEVATOR_NAME);
+        elevatorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        elevatorRight    .setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
     }
 
     public void REVERSE() {
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//      elevatorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+      elevatorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -90,48 +83,14 @@ public class TeleopRunOneController extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //drive = new Drive(hardwareMap);
-        betterGamepad1 = new BetterGamepad(gamepad1);
-        betterGamepad2 = new BetterGamepad(gamepad1);
         hardwareMapNames();
         REVERSE();
         waitForStart();
         while (opModeIsActive()) {
-            double strafe = -gamepad1.left_stick_x;
-            double move = gamepad1.left_stick_y;
-            double turn = -gamepad1.right_stick_x;
-            frontLeft.setPower(move + strafe + turn);
-            backLeft.setPower(move - strafe + turn);
-            frontRight.setPower(move - strafe - turn);
-            backRight.setPower(move + strafe - turn);
-            Elevator(betterGamepad1.right_stick_y);
-            Intake(betterGamepad1.right_trigger + -betterGamepad1.left_trigger);
-
-
-            if (betterGamepad1.dpadUp()) {
-                horizontalSlides(40);
-            }
-
-            if (betterGamepad1.dpadDown()) {
-                horizontalSlides(0);
-            }
-
-            if (betterGamepad1.dpadLeft()) {
-                intakeServo(0);
-            }
-
-            if (betterGamepad1.dpadRight()) {
-                intakeServo(0.4);
-            }
-
-            /** if (betterGamepad1.B()) {
-                funnle(0.3);
-            }
-
-            if (betterGamepad1.X()) {
-                funnle(0);
-
-            } **/
+            telemetry.addData("Spins: ", elevatorLeft.getCurrentPosition());
+            telemetry.update();
+            Elevator(gamepad1.left_stick_x);
         }
     }
-}
+    }
+

@@ -12,35 +12,34 @@ import org.firstinspires.ftc.teamcode.values.DeviceNames;
 public class initialize extends LinearOpMode {
 
 
-    public ServoImplEx leftSlide;
-    public ServoImplEx rightSlide;
-    public ServoImplEx LeftIntake;
+    public ServoImplEx PincerArmLeft;
+    public ServoImplEx PincerArmRight;
+    public ServoImplEx PincerTurn;
+    public ServoImplEx PincerGrab;
+    public ServoImplEx PincerRoll;
     public ServoImplEx RightIntake;
     public ServoImplEx LeftFunnel;
-
     public ServoImplEx RightFunnel;
 
-    public void setter(double set){
-        leftSlide.setPosition(set);
-        rightSlide.setPosition(set);
-        LeftIntake.setPosition(set);
-        RightIntake.setPosition(set);
-    }
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-        leftSlide= hardwareMap.get(ServoImplEx.class, "LHS");
-        rightSlide= hardwareMap.get(ServoImplEx.class, "RHS");
-        LeftFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_FUNNEL_NAME);
-        RightFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_FUNNEL_NAME);
-        LeftFunnel.setDirection(Servo.Direction.REVERSE);
-
-
+        PincerGrab= hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_GRAB_NAME);
+        PincerArmLeft = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_LEFT_NAME);
+        PincerArmRight = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
+        PincerRoll = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ROLL_NAME);
+        PincerTurn = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_TURN_NAME);
+//        RightFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_FUNNEL_NAME);
+//        LeftFunnel.setDirection(Servo.Direction.REVERSE);
 //        LeftIntake= hardwareMap.get(ServoImplEx.class, "LIS");
 //        RightIntake= hardwareMap.get(ServoImplEx.class, "RIS");
 
-        leftSlide.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        rightSlide.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        PincerArmLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        PincerArmRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        PincerRoll.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        PincerTurn.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        PincerGrab.setPwmRange(new PwmControl.PwmRange(500, 2500));
 //        LeftIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
 //        RightIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
@@ -49,7 +48,7 @@ public class initialize extends LinearOpMode {
         //LeftIntake.setPwmEnable();
         //RightIntake.setPwmEnable();
 
-        rightSlide.setDirection(Servo.Direction.REVERSE);
+        //rightSlide.setDirection(Servo.Direction.REVERSE);
         // LeftIntake.setDirection(Servo.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()) {
@@ -68,15 +67,21 @@ public class initialize extends LinearOpMode {
 //                rightSlide.setPosition(20.0 / 300.0);
 //            }
             if (gamepad1.a) {
-                LeftFunnel.setPosition(0);
-                RightFunnel.setPosition(0);
+                PincerArmLeft.setPosition(0);
+                PincerArmRight.setPosition(0);
+                PincerRoll.setPosition(0.5);
+                PincerGrab.setPosition(0.03);
+                PincerTurn.setPosition(0);
+            }else if (gamepad1.b) {
+                PincerArmLeft.setPosition(0.5);
+                PincerArmRight.setPosition(0.5);
+                PincerRoll.setPosition(0.7);
+                PincerGrab.setPosition(0.3);
+                PincerTurn.setPosition(0.5);    
+            } else if (gamepad1.right_trigger > 0) {
+                PincerTurn.setPosition(gamepad1.right_trigger);
+                telemetry.addData("pos", gamepad1.right_trigger);
             }
-
-            telemetry.addData("type left slide: ", leftSlide.getPwmRange());
-            telemetry.addData("type right slide: ", rightSlide.getPwmRange());
-            //telemetry.addData("type left servo: ", LeftIntake.getPwmRange());
-            //telemetry.addData("type right servo: ", RightIntake.getPwmRange());
-            telemetry.update();
         }
     }
 }

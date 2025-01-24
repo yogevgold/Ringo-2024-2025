@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.systems;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,39 +17,38 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.values.DeviceNames;
 import org.firstinspires.ftc.teamcode.values.Values;
 
-import java.util.concurrent.TimeUnit;
+@Config
 
 public class Elevator {
     private DcMotorEx leftMotor;
     private DcMotorEx rightMotor;
-    private Servo rightHook;
-    private Servo leftHook;
     private TouchSensor touchSensor;
     private ElapsedTime  timer;
-    private PIDFCoefficients pid;
+    private ElevatorPIDF pid;
 
     public int currentHeight;
-
     public Elevator(HardwareMap map){
         leftMotor = map.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
         rightMotor = map.get(DcMotorEx.class, DeviceNames.RIGHT_ELEVATOR_NAME);
         touchSensor = map.get(TouchSensor.class, DeviceNames.ELEVATOR_TOUCH_SENSOR_NAME);
-        leftHook = map.get(Servo.class, DeviceNames.LEFT_HOOK_NAME);
-        rightHook = map.get(Servo.class, DeviceNames.RIGHT_HOOK_NAME);
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        pid = new PIDFCoefficients(Values.P_OF_ELEVATOR, Values.I_OF_ELEVATOR, Values.D_OF_ELEVATOR, Values.F_OF_ELEVATOR);
+        pid = new ElevatorPIDF(Values.P_OF_ELEVATOR, Values.I_OF_ELEVATOR, Values.D_OF_ELEVATOR, Values.F_OF_ELEVATOR, Values.IZONE_OF_ELEVATOR);
         //קביעת ערכי משוואת הpid מהתיקייה של הערכים הקבועים PIDValues
         timer = new ElapsedTime();
         timer.startTime();
-        leftMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pid);
-        rightMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pid);
+
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
+
         //קובע את אופן העובדה של המנוע - או הרצה לפי מהירות או לפי מיקום.
         //מעלית לדוגמא זה לפי מיקום מכיוון שרצים לפי גובה (סם) אבל איסוף זה מהירות מכיוון שרצים לפי המהירות של המערכת. ויישום ערכי הpid שקבענו מקודם.
-        leftMotor.setTargetPositionTolerance(Values.CM_TOLERANCE_ELEVATOR);
         //קביעה של כמות הסבל שלהpid
-
         currentHeight = 0;
+        pid.setTargetHeight(currentHeight);
     }
 
     public void powerMotors(double pow) {
@@ -73,10 +73,28 @@ public class Elevator {
             }
         };
     }
-    public Action moveCM(double pow) {
+
+    public Action moveByPower(double pow) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 powerMotors(pow);
+                return false;
+            }
+        };
+    }
+    public Action moveCM(int cm){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                pid.setTargetHeight(cm);
+                rightMotor.setPower(-pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                leftMotor.setPower(-pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
+
+                telemetryPacket.put("LeftPower: ", -pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("RightPower: ", -pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("goalCm: ", cm);
+                telemetryPacket.put("actual left cm: ", (-leftMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("actual right cm: ", (-rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
                 return false;
             }
         };
