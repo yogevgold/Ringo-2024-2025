@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -14,51 +17,43 @@ public class Pincer {
     public Servo PincerArmRight;
     public Servo PincerGrab;
     public Servo PincerTurn;
+    public Servo PincerRoll;
 
     public Pincer(HardwareMap map){
         PincerArmLeft = map.get(Servo.class, DeviceNames.PINCER_ARM_LEFT_NAME);
         PincerArmRight = map.get(Servo.class, DeviceNames.PINCER_ARM_LEFT_NAME);
         PincerGrab = map.get(Servo.class, DeviceNames.PINCER_GRAB_NAME);
         PincerTurn = map.get(Servo.class, DeviceNames.PINCER_TURN_NAME);
+        PincerRoll = map.get(Servo.class, DeviceNames.PINCER_ROLL_NAME);
     }
 
-
-    public Action turnPincer(double pos){
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                PincerArmLeft.setPosition(pos);
-
-
-                return false;
-            }
-        };
-
-
-
+    private void pincerArm(double pos) {
+        PincerArmLeft.setPosition(pos);
+        PincerArmRight.setPosition(pos);
     }
-    public Action movePincer(double pos){
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                PincerArmLeft.setPosition(pos);
-                return false;
-            }
-        };
 
-
-
+    private void pincerTurn(double pos) {
+        PincerTurn.setPosition(pos);
     }
-    public Action grabsample(double pos){
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                PincerGrab.setPosition(pos);
-                return false;
-            }
-        };
 
-
-
+    private void pincerRoll(double pos) {
+        PincerRoll.setPosition(pos);
     }
+
+    private void pincerGrab(double pos) {
+        PincerGrab.setPosition(pos);
+    }
+
+    public Action PincerPosition(double posArm, double posTurn, double posRoll, double posGrab){
+        return new SequentialAction(
+                new InstantAction(()-> pincerArm(posArm)),
+                new SleepAction(0.5),
+                new InstantAction(()-> pincerTurn(posTurn)),
+                new SleepAction(0.5),
+                new InstantAction(()-> pincerRoll(posRoll)),
+                new SleepAction(0.5),
+                new InstantAction(()-> pincerGrab(posGrab))
+        );
+    }
+
 }

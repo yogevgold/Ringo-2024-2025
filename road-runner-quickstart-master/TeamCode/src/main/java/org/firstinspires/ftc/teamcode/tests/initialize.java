@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.values.DeviceNames;
 public class initialize extends LinearOpMode {
 
 
-    public ServoImplEx PincerArmLeft;
-    public ServoImplEx PincerArmRight;
+    public Servo PincerArmLeft;
+    public Servo PincerArmRight;
     public ServoImplEx PincerTurn;
     public ServoImplEx PincerGrab;
     public ServoImplEx PincerRoll;
@@ -30,16 +30,13 @@ public class initialize extends LinearOpMode {
         PincerArmRight = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
         PincerRoll = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ROLL_NAME);
         PincerTurn = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_TURN_NAME);
+        PincerArmLeft.setDirection(Servo.Direction.REVERSE);
 //        RightFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_FUNNEL_NAME);
 //        LeftFunnel.setDirection(Servo.Direction.REVERSE);
+
 //        LeftIntake= hardwareMap.get(ServoImplEx.class, "LIS");
 //        RightIntake= hardwareMap.get(ServoImplEx.class, "RIS");
 
-        PincerArmLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        PincerArmRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        PincerRoll.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        PincerTurn.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        PincerGrab.setPwmRange(new PwmControl.PwmRange(500, 2500));
 //        LeftIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
 //        RightIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
@@ -64,23 +61,26 @@ public class initialize extends LinearOpMode {
 //
 //            if (gamepad1.y) {
 //                leftSlide.setPosition(20.0 / 300.0);
-//                rightSlide.setPosition(20.0 / 300.0);
+//                rightSlide.setPosition(20.0 / 300.0)
 //            }
             if (gamepad1.a) {
-                PincerArmLeft.setPosition(0);
-                PincerArmRight.setPosition(0);
-                PincerRoll.setPosition(0.5);
-                PincerGrab.setPosition(0.03);
-                PincerTurn.setPosition(0);
+//                PincerArmLeft.setPosition(0.093);
+//                PincerArmRight.setPosition(0.093);
+//                PincerRoll.setPosition(0.48);
+//                PincerGrab.setPosition(0.03);
+                PincerTurn.setPosition(0.1);
             }else if (gamepad1.b) {
-                PincerArmLeft.setPosition(0.5);
-                PincerArmRight.setPosition(0.5);
-                PincerRoll.setPosition(0.7);
-                PincerGrab.setPosition(0.3);
-                PincerTurn.setPosition(0.5);    
+                PincerArmLeft.setPosition(0.08);
+                PincerArmRight.setPosition(0.08);
+//                PincerRoll.setPosition(0.82);
+//                PincerGrab.setPosition(0.3);
+                PincerTurn.setPosition(0.3);
+            } else if (gamepad1.y) {
+                PincerTurn.setPosition(0.3);
             } else if (gamepad1.right_trigger > 0) {
-                PincerTurn.setPosition(gamepad1.right_trigger);
-                telemetry.addData("pos", gamepad1.right_trigger);
+                PincerRoll.setPosition(gamepad1.right_trigger);
+                //PincerArmRight.setPosition(gamepad1.right_trigger);
+                telemetry.addData("pos", PincerRoll.getPosition());
             }
         }
     }

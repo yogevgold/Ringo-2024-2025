@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.BetterGamepad;
 import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.values.DeviceNames;
+import org.firstinspires.ftc.teamcode.values.Values;
 
 @TeleOp
 public class TeleopRunOneController extends LinearOpMode {
@@ -32,8 +34,8 @@ public class TeleopRunOneController extends LinearOpMode {
     private ServoImplEx rightHorizontalServo;
 
 
-    private DcMotor elevatorRight;
-    private DcMotor elevatorLeft;
+    private DcMotorEx elevatorRight;
+    private DcMotorEx elevatorLeft;
     private TouchSensor elevatorTouch;
     private DistanceSensor sampleCheck;
 
@@ -43,10 +45,10 @@ public class TeleopRunOneController extends LinearOpMode {
 
 
     public void hardwareMapNames() {
-        elevatorRight = hardwareMap.get(DcMotor.class, DeviceNames.RIGHT_ELEVATOR_NAME);
-        elevatorLeft = hardwareMap.get(DcMotor.class, DeviceNames.LEFT_ELEVATOR_NAME);
+        elevatorRight = hardwareMap.get(DcMotorEx.class, DeviceNames.RIGHT_ELEVATOR_NAME);
+        elevatorLeft = hardwareMap.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
         elevatorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        elevatorRight    .setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        elevatorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
     }
 
@@ -86,8 +88,11 @@ public class TeleopRunOneController extends LinearOpMode {
         hardwareMapNames();
         REVERSE();
         waitForStart();
+        telemetry.addData("elevatorLeftValue: ", elevatorLeft.getCurrentPosition() / Values.TICKS_TO_CM_RATION);
+        telemetry.addData("elevatorRightValue: ", elevatorRight.getCurrentPosition() / Values.TICKS_TO_CM_RATION);
         while (opModeIsActive()) {
-            telemetry.addData("Spins: ", elevatorLeft.getCurrentPosition());
+
+
             telemetry.update();
             Elevator(gamepad1.left_stick_x);
         }

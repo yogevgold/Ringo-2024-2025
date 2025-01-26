@@ -59,6 +59,7 @@ public class actionMerge extends LinearOpMode {
             List<Action> newActions = new ArrayList<>();
             if(gamepad1.y){elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;}
             if(gamepad1.b){elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;}
+            if(gamepad1.x){elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;}
             if(gamepad1.a){elevatorHeightCM = 0;}
 
 
@@ -90,7 +91,6 @@ public class actionMerge extends LinearOpMode {
             else telemetry.addLine("");
 
 
-//            if(gamepad1.b){
 //                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_CLOSED)));
 //            }
 //            else if(gamepad1.a){
