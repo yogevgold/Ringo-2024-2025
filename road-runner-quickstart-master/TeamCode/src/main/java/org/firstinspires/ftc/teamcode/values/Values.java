@@ -12,33 +12,29 @@ public class Values {
     public static final int CM_TOLERANCE_ELEVATOR = 100; //ppr
     public static final int TICKS_TO_CM_RATION = 4250 / 70;//(ppr/cm)
 
+
     public static final int FIRST_BUCKET_HEIGHT_CM = 36;
     public static final int SECOUND_BUCKET_HEIGHT_CM = 82;//81
     public static final int SECOUND_BAR_HEIGHT_CM = 11;//81
 
-    public static final double HOTIZONTAL_SLIDES_OPEN = 0.6;
-    public static final double HOTIZONTAL_SLIDES_CLOSE = 0.9;
-    public static final double INTAKE_CLOSE = 0.8;
-    public static final double INTAKE_UP = 0.3;
-    public static final double INTAKE_DOWN = 0.2;
 
-    public static final double FUNNEL_OPEN = 0.6;
-    public static final double FUNNEL_CLOSED = 0.9;
+    public static final double HOTIZONTAL_SLIDES_OPEN = 0;
+    public static final double HOTIZONTAL_SLIDES_CLOSE = 0.13;
 
+
+    public static final double INTAKE_CLOSE = 0.16;
+    public static final double INTAKE_UP = 0.75;
+    public static final double INTAKE_DOWN = 0.85;
 
 
     public static final double ARM_OUT = 0.015;
-    public static final double ARM_IN = 0.093;
-    public static final double ARM_WATING = 0.08;
+    public static final double ARM_IN = 0.06;
+    public static final double ARM_WATING = 0.04;
 
 
-
-    public static final double TURN_OUT_DOWN = 0;
     public static final double TURN_IN = 0;
-    public static final double TURN_OUT_UP = 0;
+    public static final double TURN_OUT = 0;
     public static final double TURN_WATING = 0.1;
-
-
 
 
     public static final double ROLL_OUT = 0.48;

@@ -21,7 +21,7 @@ public class Pincer {
 
     public Pincer(HardwareMap map){
         PincerArmLeft = map.get(Servo.class, DeviceNames.PINCER_ARM_LEFT_NAME);
-        PincerArmRight = map.get(Servo.class, DeviceNames.PINCER_ARM_LEFT_NAME);
+        PincerArmRight = map.get(Servo.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
         PincerGrab = map.get(Servo.class, DeviceNames.PINCER_GRAB_NAME);
         PincerTurn = map.get(Servo.class, DeviceNames.PINCER_TURN_NAME);
         PincerRoll = map.get(Servo.class, DeviceNames.PINCER_ROLL_NAME);
@@ -32,15 +32,15 @@ public class Pincer {
         PincerArmRight.setPosition(pos);
     }
 
-    private void pincerTurn(double pos) {
+    public void pincerTurn(double pos) {
         PincerTurn.setPosition(pos);
     }
 
-    private void pincerRoll(double pos) {
+    public void pincerRoll(double pos) {
         PincerRoll.setPosition(pos);
     }
 
-    private void pincerGrab(double pos) {
+    public void pincerGrab(double pos) {
         PincerGrab.setPosition(pos);
     }
 
