@@ -1,4 +1,4 @@
-/** package org.firstinspires.ftc.teamcode;
+ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
 
 @TeleOp
 public class TeleopYarden1 extends LinearOpMode {
-
     private DcMotor FrontRight; //הגדרת מנוע DC קידמי ימני
     private DcMotor FrontLeft; //
     private DcMotor BackRight;
@@ -118,13 +118,6 @@ public class TeleopYarden1 extends LinearOpMode {
     }
 
 
-
-
-
-
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         FrontRight = hardwareMap.get(DcMotor.class, DeviceNames.FRONT_RIGHT_NAME);
@@ -138,25 +131,24 @@ public class TeleopYarden1 extends LinearOpMode {
         RElevator = hardwareMap.get(Servo.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
         LIntake = hardwareMap.get(Servo.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
         RIntake = hardwareMap.get(Servo.class, DeviceNames.RIGHT_INTAKE_SERVO_NAME);
-         LeftHook = hardwareMap.get(Servo.class,DeviceNames.LEFT_HOOK_NAME);
-         RightHook = hardwareMap.get(Servo.class,DeviceNames.RIGHT_HOOK_NAME);
-         // LSlide = hardwareMap.get(Servo.class, DeviceNames.LEFT_FUNNEL_NAME);
-        //  RSlide = hardwareMap.get(Servo.class,DeviceNames.RIGHT_FUNNEL_NAME);
+        LeftHook = hardwareMap.get(Servo.class,DeviceNames.LEFT_HOOK_NAME);
+        RightHook = hardwareMap.get(Servo.class,DeviceNames.RIGHT_HOOK_NAME);
+         LSlide = hardwareMap.get(Servo.class, DeviceNames.LEFT_FUNNEL_NAME);
+         RSlide = hardwareMap.get(Servo.class,DeviceNames.RIGHT_FUNNEL_NAME);
         ///  LeftLocker = hardwareMap.get(Servo.class, "ll");
         // RightLocker = hardwareMap.get(Servo.class, "rl");
+
 
 
         BackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         LEHook.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
-
         waitForStart();
         telemetry.addLine("started ");
         telemetry.update();
 
-        while (opModeIsActive()) {
+        while (opModeIsActive()){
 
             forwardBackward(-gamepad1.left_stick_y);
             strafe(gamepad1.left_stick_x);
@@ -173,9 +165,6 @@ public class TeleopYarden1 extends LinearOpMode {
                 telemetry.addLine("left trigger  pressed");
 
             }
-
-
-
             if (gamepad2.a) {
                 grab();
             }
@@ -194,36 +183,72 @@ public class TeleopYarden1 extends LinearOpMode {
             if (gamepad2.y) {
                 ReturnIntake();
             }
-/**
- if (gamepad2.dpad_up) {
- MoveSlide();
- }
+            if (gamepad2.dpad_up) {
+                MoveSlide();
+            }
 
- if (gamepad2.dpad_down) {
- ReturnSlide();
- }
+            if (gamepad2.dpad_down) {
+                ReturnSlide();
+            }
 
- if (gamepad2.dpad_left) {
- CloseE();
- }
+            if (gamepad2.dpad_left) {
+                CloseE();
+            }
 
- if (gamepad2.dpad_right) {
- OpenE();
- }
+            if (gamepad2.dpad_right) {
+                OpenE();
+            }
 
- if (gamepad2.left_bumper) {
- CloseME();
- }
+            if (gamepad2.left_bumper) {
+                CloseME();
+            }
 
- if (gamepad2.right_bumper) {
- OpenME();
- }
- **/
-//            telemetry.update();
-//
-//
-//        }
-//    }
-//}
+            if (gamepad2.right_bumper) {
+                OpenME();
+            }
+            telemetry.update();
+
+
+
+        }
+
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
