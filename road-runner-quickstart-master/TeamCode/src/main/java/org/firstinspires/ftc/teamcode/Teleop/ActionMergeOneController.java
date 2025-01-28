@@ -64,8 +64,13 @@ public class ActionMergeOneController extends LinearOpMode {
                 telemetry.addLine("dpadLeft pressed");
                 intakeOpen = true;
                 newActions.add(new SequentialAction(
-                        pincer.PincerPosition(Values.ARM_WATING, Values.TURN_WATING, Values.ROLL_IN, Values.GRAB_OPEN)
-                ));
+                        //pincer.PincerPosition(Values.ARM_WATING, Values.TURN_WATING, Values.ROLL_IN, Values.GRAB_OPEN)
+                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_OUT))));
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN));
+                        new InstantAction(()-> pincer.pincerRoll(Values.TURN_OUT));
+                        new InstantAction(()-> pincer.pincerArm(Values.ARM_IN));
+
+
             }
 
             if (gamepad2.dpad_right) {
