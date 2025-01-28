@@ -27,6 +27,7 @@ public class Outtake {
         Leftfunnel.setPosition(FunnelPos);
         Rightfunnel.setPosition(FunnelPos);
     }
+
     public Action Funnels(double val) {
         return new Action() {
             @Override

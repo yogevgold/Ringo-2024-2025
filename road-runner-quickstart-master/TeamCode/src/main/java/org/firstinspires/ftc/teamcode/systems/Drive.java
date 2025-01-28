@@ -28,7 +28,8 @@ public class Drive {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public Action TeleDrive(double strafe, double move, double turn){
+
+    public Action intakeCloseDrive(double strafe, double move, double turn){
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -36,6 +37,19 @@ public class Drive {
                 backLeft.setPower(move - strafe + turn);
                 frontRight.setPower(move - strafe - turn);
                 backRight.setPower(move + strafe - turn);
+                return false;
+            }
+        };
+    }
+
+    public Action intakeOpenDrive(double strafe, double move, double turn){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                frontLeft.setPower(move / 2 + strafe / 2 + turn / 2);
+                backLeft.setPower(move / 2 - strafe / 2 + turn / 2);
+                frontRight.setPower(move  / 2- strafe / 2 - turn / 2);
+                backRight.setPower(move / 2 + strafe / 2 - turn / 2);
                 return false;
             }
         };
