@@ -27,7 +27,7 @@ public class Pincer {
         PincerRoll = map.get(Servo.class, DeviceNames.PINCER_ROLL_NAME);
     }
 
-    private void pincerArm(double pos) {
+    public void pincerArm(double pos) {
         PincerArmLeft.setPosition(pos);
         PincerArmRight.setPosition(pos);
     }

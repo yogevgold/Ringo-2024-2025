@@ -29,7 +29,7 @@ public class initialize extends LinearOpMode {
     public Servo SERVO_EXPANSION_05;
 
     public Servo SERVO_CONTROL_03;
-    public Servo SERVO_CONTROL_04;
+    public Servo SERVO_CONTROL_00;
     public Servo SERVO_CONTROL_05;
 
     @Override
@@ -54,7 +54,7 @@ public class initialize extends LinearOpMode {
         SERVO_EXPANSION_05 = hardwareMap.get(Servo.class, "05E"); // Roll
 
         SERVO_CONTROL_03 = hardwareMap.get(Servo.class, "03C"); // Arm Right
-        SERVO_CONTROL_04 = hardwareMap.get(Servo.class, "04C"); // turn
+        SERVO_CONTROL_00 = hardwareMap.get(Servo.class, "00C"); // turn
         SERVO_CONTROL_05 = hardwareMap.get(Servo.class, "05C"); // Arm Left
 
 //        RightFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_FUNNEL_NAME);
@@ -76,9 +76,9 @@ public class initialize extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                SERVO_CONTROL_04.setPosition(0);
+                SERVO_CONTROL_00.setPosition(0);
                 sleep(200);
-                SERVO_CONTROL_04.setPosition(0.2);
+                SERVO_CONTROL_00.setPosition(0.2);
             } else if (gamepad1.b) {
                 SERVO_CONTROL_05.setPosition(0);
                 sleep(200);
@@ -88,6 +88,22 @@ public class initialize extends LinearOpMode {
                 sleep(200);
                 SERVO_CONTROL_03.setPosition(0.2);
             } else if (gamepad1.x) {
+                SERVO_EXPANSION_05.setPosition(0);
+                sleep(200);
+                SERVO_EXPANSION_05.setPosition(0.2);
+            }if (gamepad1.dpad_left) {
+                SERVO_EXPANSION_01.setPosition(0);
+                sleep(200);
+                SERVO_EXPANSION_01.setPosition(0.2);
+            } else if (gamepad1.dpad_down) {
+                SERVO_EXPANSION_02.setPosition(0);
+                sleep(200);
+                SERVO_EXPANSION_02.setPosition(0.2);
+            } else if (gamepad1.dpad_up) {
+                SERVO_EXPANSION_03.setPosition(0);
+                sleep(200);
+                SERVO_EXPANSION_03.setPosition(0.2);
+            } else if (gamepad1.dpad_right) {
                 SERVO_EXPANSION_04.setPosition(0);
                 sleep(200);
                 SERVO_EXPANSION_04.setPosition(0.2);

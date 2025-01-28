@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.values;
 
 public class DeviceNames {
-    public static final String LEFT_ELEVATOR_NAME = "le";
-    public static final String RIGHT_ELEVATOR_NAME = "re";
+    public static final String LEFT_ELEVATOR_NAME = "re";
+    public static final String RIGHT_ELEVATOR_NAME = "le";
     public static final String ELEVATOR_TOUCH_SENSOR_NAME = "ETouch";
     public static final String INTAKE_MOTOR_NAME = "Intake";
 
