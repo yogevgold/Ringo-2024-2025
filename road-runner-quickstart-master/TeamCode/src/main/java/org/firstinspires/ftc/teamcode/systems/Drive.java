@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,17 +14,17 @@ import org.firstinspires.ftc.teamcode.values.DeviceNames;
 
 public class Drive {
 
-    private DcMotorEx frontLeft;
-    private DcMotorEx frontRight;
-    private DcMotorEx backLeft;
-    private DcMotorEx backRight;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backLeft;
+    private DcMotor backRight;
     private Limelight3A LimeLight;
 
     public Drive(HardwareMap map) {
-        frontLeft = map.get(DcMotorEx.class, DeviceNames.FRONT_LEFT_NAME);
-        frontRight = map.get(DcMotorEx.class, DeviceNames.FRONT_RIGHT_NAME);
-        backLeft = map.get(DcMotorEx.class, DeviceNames.BACK_LEFT_NAME);
-        backRight = map.get(DcMotorEx.class, DeviceNames.BACK_RIGHT_NAME);
+        frontLeft = map.get(DcMotor.class, DeviceNames.FRONT_LEFT_NAME);
+        frontRight = map.get(DcMotor.class, DeviceNames.FRONT_RIGHT_NAME);
+        backLeft = map.get(DcMotor.class, DeviceNames.BACK_LEFT_NAME);
+        backRight = map.get(DcMotor.class, DeviceNames.BACK_RIGHT_NAME);
         //LimeLight = map.get(Limelight3A.class, DeviceNames.LIME_LIGHT);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);

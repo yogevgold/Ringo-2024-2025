@@ -22,9 +22,9 @@ public class Values {
     public static final double HOTIZONTAL_SLIDES_CLOSE = 0.13;
 
 
-    public static final double INTAKE_CLOSE = 0.16;
-    public static final double INTAKE_UP = 0.75;
-    public static final double INTAKE_DOWN = 0.85;
+    public static final double INTAKE_DOWN = 0.2;
+    public static final double INTAKE_CLOSE = 0.75;
+    public static final double INTAKE_UP = 0.27;
 
 
     public static final double ARM_OUT = 0.015;
@@ -34,15 +34,15 @@ public class Values {
 
     public static final double TURN_IN = 0;
     public static final double TURN_OUT = 0;
-    public static final double TURN_WATING = 0.1;
+    public static final double TURN_WATING = 0.08;
 
 
     public static final double ROLL_OUT = 0.48;
     public static final double ROLL_IN = 0.82;
 
 
-    public static final double GRAB_OPEN = 0.03;
-    public static final double GRAB_CLOSE = 0.3;
+    public static final double GRAB_OPEN = 0.3;
+    public static final double GRAB_CLOSE = 0;
 
 
 

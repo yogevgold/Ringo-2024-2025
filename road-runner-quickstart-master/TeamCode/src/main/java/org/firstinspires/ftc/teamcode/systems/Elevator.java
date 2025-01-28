@@ -41,7 +41,7 @@ public class Elevator {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
@@ -88,8 +88,8 @@ public class Elevator {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 pid.setTargetHeight(cm);
-                rightMotor.setPower(-pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
-                leftMotor.setPower(-pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
+                rightMotor.setPower(pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                leftMotor.setPower(pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
 
                 telemetryPacket.put("LeftPower: ", -pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
                 telemetryPacket.put("RightPower: ", -pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));

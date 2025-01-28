@@ -25,8 +25,7 @@ import java.util.List;
 public class actionMerge extends LinearOpMode {
     Drive drive;
     Elevator elevator;
-   Intake intake;
-    Outtake outtake;
+    Intake intake;
     Pincer pincer;
     private FtcDashboard dash;
     private List<Action> runningActions;
@@ -43,10 +42,10 @@ public class actionMerge extends LinearOpMode {
         double intakePower = 0;
         boolean intakeOpen = false;
 
+
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
-        outtake = new Outtake(hardwareMap);
         pincer = new Pincer(hardwareMap);
 
 
@@ -64,7 +63,6 @@ public class actionMerge extends LinearOpMode {
 
 
             if (gamepad2.dpad_left) {
-                telemetry.addLine("dpadLeft pressed");
                 intakeOpen = true;
                 newActions.add(new SequentialAction(
                         new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_OPEN)),
@@ -72,7 +70,6 @@ public class actionMerge extends LinearOpMode {
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
                 ));
             }else if (gamepad2.dpad_right) {
-                telemetry.addLine("dpadRight pressed");
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
                         new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_CLOSE)),
@@ -80,16 +77,29 @@ public class actionMerge extends LinearOpMode {
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
                 ));
             } else if (gamepad2.dpad_up) {
-                telemetry.addLine("dpadUp pressed");
                 intakeOpen = true;
                 newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP)));
             } else if (gamepad2.dpad_down) {
-                telemetry.addLine("dpadDown pressed");
                 intakeOpen = true;
                 newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN)));
             }
-            else telemetry.addLine("");
 
+
+            if (gamepad1.a) {
+                newActions.add(new InstantAction(()->pincer.pincerGrab(Values.GRAB_CLOSE)));
+            } else if (gamepad1.b) {
+                newActions.add(new InstantAction(()->pincer.pincerGrab(Values.GRAB_OPEN)));
+            }
+
+
+            if (gamepad1.x) {
+                newActions.add(new InstantAction(()->pincer.pincerTurn(Values.TURN_OUT)));
+                newActions.add(new InstantAction(()->pincer.pincerRoll(Values.ROLL_OUT)));
+            }
+            if (gamepad1.y) {
+                newActions.add(new InstantAction(()->pincer.pincerTurn(Values.TURN_WATING)));
+                newActions.add(new InstantAction(()->pincer.pincerRoll(Values.ROLL_OUT)));
+            }
 
 //                newActions.add(new InstantAction(()-> outtake.MoveFunnel(Values.FUNNEL_CLOSED)));
 //            }
@@ -101,9 +111,13 @@ public class actionMerge extends LinearOpMode {
             if (intakeOpen) {
                 contActions = new ParallelAction(
                         drive.intakeOpenDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
-                        elevator.moveCM(elevatorHeightCM),
-                        intake.IntakePower(gamepad2.right_stick_y),
-                        intake.IntakePower(-gamepad2.right_trigger / 7)
+                        elevator.moveByPower(-gamepad1.right_stick_y),
+//                        elevator.moveCM(elevatorHeightCM),
+                        intake.IntakePower(gamepad2.right_trigger - gamepad2.left_trigger),
+                        intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
+
+
+
 
                         //new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x))
                 );
@@ -123,11 +137,11 @@ public class actionMerge extends LinearOpMode {
             } else if (!intakeOpen) {
                 contActions = new ParallelAction(
                         drive.intakeCloseDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
-                        elevator.moveCM(elevatorHeightCM),
-                        intake.IntakePower(gamepad2.right_stick_y),
-                        intake.IntakePower(-gamepad2.right_trigger / 7),
-                        new InstantAction(()-> intake.horizontalslides(gamepad2.left_stick_x)
-                ));
+//                        elevator.moveCM(elevatorHeightCM),
+                        elevator.moveByPower(-gamepad1.right_stick_y),
+                        intake.IntakePower(gamepad2.right_trigger - gamepad2.left_trigger),
+                        intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
+                );
                 TelemetryPacket packet = new TelemetryPacket();
 
 
