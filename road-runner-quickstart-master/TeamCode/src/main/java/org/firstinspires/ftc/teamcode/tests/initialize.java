@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
+
 @TeleOp
 public class initialize extends LinearOpMode {
 
@@ -34,79 +36,35 @@ public class initialize extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-//        PincerGrab= hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_GRAB_NAME);
-//        PincerArmLeft = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_LEFT_NAME);
-//        PincerArmRight = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
-//        PincerRoll = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ROLL_NAME);
-//        PincerTurn = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_TURN_NAME);
-//        RightIntake = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_INTAKE_SERVO_NAME);
-//        LeftIntake = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
-//        LeftHorizontal = hardwareMap.get(Servo.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
-//        RightHorizontal = hardwareMap.get(Servo.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
-//        PincerArmLeft.setDirection(Servo.Direction.REVERSE);
-//        LeftHorizontal.setDirection(Servo.Direction.REVERSE);
+        PincerGrab= hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_GRAB_NAME);
+        PincerArmLeft = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_LEFT_NAME);
+        PincerArmRight = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
+        PincerRoll = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ROLL_NAME);
+        PincerTurn = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_TURN_NAME);
+        RightIntake = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_INTAKE_SERVO_NAME);
+        LeftIntake = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
+        LeftHorizontal = hardwareMap.get(Servo.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
+        RightHorizontal = hardwareMap.get(Servo.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
+        PincerArmLeft.setDirection(Servo.Direction.REVERSE);
+        LeftHorizontal.setDirection(Servo.Direction.REVERSE);
 
-        SERVO_EXPANSION_00 = hardwareMap.get(Servo.class, "00E"); // intake right
-        SERVO_EXPANSION_01 = hardwareMap.get(Servo.class, "01E"); // intake left
-        SERVO_EXPANSION_02 = hardwareMap.get(Servo.class, "02E"); // horizontal right
-        SERVO_EXPANSION_03 = hardwareMap.get(Servo.class, "03E"); // horizontal left
-        SERVO_EXPANSION_04 = hardwareMap.get(Servo.class, "04E"); // grab
-        SERVO_EXPANSION_05 = hardwareMap.get(Servo.class, "05E"); // Roll
-
-        SERVO_CONTROL_03 = hardwareMap.get(Servo.class, "03C"); // Arm Right
-        SERVO_CONTROL_00 = hardwareMap.get(Servo.class, "00C"); // turn
-        SERVO_CONTROL_05 = hardwareMap.get(Servo.class, "05C"); // Arm Left
-
-//        RightFunnel = hardwareMap.get(ServoImplEx.class, DeviceNames.RIGHT_FUNNEL_NAME);
-//        LeftFunnel.setDirection(Servo.Direction.REVERSE);
-
-//        LeftIntake= hardwareMap.get(ServoImplEx.class, "LIS");
-//        RightIntake= hardwareMap.get(ServoImplEx.class, "RIS");
-
-//        LeftIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
-//        RightIntake.setPwmRange(new PwmControl.PwmRange(500, 2500));
-
-        //leftSlide.setPwmEnable();
-        //rightSlide.setPwmEnable();
-        //LeftIntake.setPwmEnable();
-        //RightIntake.setPwmEnable();
-
-        //rightSlide.setDirection(Servo.Direction.REVERSE);
-        // LeftIntake.setDirection(Servo.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                SERVO_CONTROL_00.setPosition(0);
-                sleep(200);
-                SERVO_CONTROL_00.setPosition(0.2);
+//                PincerArmLeft.setPosition(0);
+//                PincerArmRight.setPosition(0);
+//                PincerTurn.setPosition(0);
+                PincerRoll.setPosition(0.82);
             } else if (gamepad1.b) {
-                SERVO_CONTROL_05.setPosition(0);
-                sleep(200);
-                SERVO_CONTROL_05.setPosition(0.2);
-            } else if (gamepad1.y) {
-                SERVO_CONTROL_03.setPosition(0);
-                sleep(200);
-                SERVO_CONTROL_03.setPosition(0.2);
+//                PincerArmLeft.setPosition(0.04);
+//                PincerArmRight.setPosition(0.04);
+//                PincerTurn.setPosition(0.18);
+                PincerRoll.setPosition(0.48);
             } else if (gamepad1.x) {
-                SERVO_EXPANSION_05.setPosition(0);
-                sleep(200);
-                SERVO_EXPANSION_05.setPosition(0.2);
-            }if (gamepad1.dpad_left) {
-                SERVO_EXPANSION_01.setPosition(0);
-                sleep(200);
-                SERVO_EXPANSION_01.setPosition(0.2);
-            } else if (gamepad1.dpad_down) {
-                SERVO_EXPANSION_02.setPosition(0);
-                sleep(200);
-                SERVO_EXPANSION_02.setPosition(0.2);
-            } else if (gamepad1.dpad_up) {
-                SERVO_EXPANSION_03.setPosition(0);
-                sleep(200);
-                SERVO_EXPANSION_03.setPosition(0.2);
-            } else if (gamepad1.dpad_right) {
-                SERVO_EXPANSION_04.setPosition(0);
-                sleep(200);
-                SERVO_EXPANSION_04.setPosition(0.2);
+//                PincerArmLeft.setPosition(0.08);
+//                PincerArmRight.setPosition(0.08);
+//                PincerTurn.setPosition(0.18);
+//                PincerRoll.setPosition(0.48);
             }
         }
     }

@@ -6,14 +6,12 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.Intake;
-import org.firstinspires.ftc.teamcode.systems.Outtake;
 import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.values.Values;
 
@@ -71,14 +69,14 @@ public class teletest extends LinearOpMode {
             if (gamepad2.dpad_left) {
                 intakeOpen = true;
                 newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_OPEN)),
+                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
                         new SleepAction(0.5),
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
                 ));
             }else if (gamepad2.dpad_right) {
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(Values.HOTIZONTAL_SLIDES_CLOSE)),
+                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
                         new SleepAction(0.5),
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
                 ));
@@ -101,7 +99,7 @@ public class teletest extends LinearOpMode {
 
             if (intakeOpen) {
                 contActions = new ParallelAction(
-                        drive.intakeOpenDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
+                        //drive.intakeOpenDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
                         elevator.moveCM(elevatorHeightCM),
                         intake.IntakePower(gamepad2.right_stick_y)
 
@@ -123,7 +121,7 @@ public class teletest extends LinearOpMode {
 
             } else if (!intakeOpen) {
                 contActions = new ParallelAction(
-                        drive.intakeCloseDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
+                        //drive.intakeCloseDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x),
                         elevator.moveCM(elevatorHeightCM),
                         intake.IntakePower(gamepad2.right_stick_y),
                         intake.IntakePower(-gamepad2.right_trigger / 7));

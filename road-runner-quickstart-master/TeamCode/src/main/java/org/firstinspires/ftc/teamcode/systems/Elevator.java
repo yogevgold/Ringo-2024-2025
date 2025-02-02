@@ -30,8 +30,7 @@ public class Elevator {
     public Elevator(HardwareMap map){
         leftMotor = map.get(DcMotorEx.class, DeviceNames.LEFT_ELEVATOR_NAME);
         rightMotor = map.get(DcMotorEx.class, DeviceNames.RIGHT_ELEVATOR_NAME);
-        touchSensor = map.get(TouchSensor.class, DeviceNames.ELEVATOR_TOUCH_SENSOR_NAME);
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         pid = new ElevatorPIDF(Values.P_OF_ELEVATOR, Values.I_OF_ELEVATOR, Values.D_OF_ELEVATOR, Values.F_OF_ELEVATOR, Values.IZONE_OF_ELEVATOR);
         //קביעת ערכי משוואת הpid מהתיקייה של הערכים הקבועים PIDValues
         timer = new ElapsedTime();
@@ -88,8 +87,8 @@ public class Elevator {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 pid.setTargetHeight(cm);
-                rightMotor.setPower(pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
-                leftMotor.setPower(pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
+                rightMotor.setPower(-pid.calculate(((double) rightMotor.getCurrentPosition()) /  Values.TICKS_TO_CM_RATION));
+                leftMotor.setPower(-pid.calculate(((double)  leftMotor.getCurrentPosition()) / Values.TICKS_TO_CM_RATION));
 
                 telemetryPacket.put("LeftPower: ", -pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
                 telemetryPacket.put("RightPower: ", -pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));

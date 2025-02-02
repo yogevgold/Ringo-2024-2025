@@ -25,6 +25,7 @@ public class Pincer {
         PincerGrab = map.get(Servo.class, DeviceNames.PINCER_GRAB_NAME);
         PincerTurn = map.get(Servo.class, DeviceNames.PINCER_TURN_NAME);
         PincerRoll = map.get(Servo.class, DeviceNames.PINCER_ROLL_NAME);
+        PincerArmLeft.setDirection(Servo.Direction.REVERSE);
     }
 
     public void pincerArm(double pos) {
@@ -45,15 +46,36 @@ public class Pincer {
     }
 
     public Action PincerPosition(double posArm, double posTurn, double posRoll, double posGrab){
-        return new SequentialAction(
-                new InstantAction(()-> pincerArm(posArm)),
-                new SleepAction(0.5),
-                new InstantAction(()-> pincerTurn(posTurn)),
-                new SleepAction(0.5),
-                new InstantAction(()-> pincerRoll(posRoll)),
-                new SleepAction(0.5),
-                new InstantAction(()-> pincerGrab(posGrab))
-        );
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//                newActions.add(new SequentialAction(
+//                        new InstantAction(()-> pincerArm(posArm)),
+//                        new SleepAction(0.5),
+//                        new InstantAction(()-> pincerTurn(posTurn)),
+//                        new SleepAction(0.5),
+//                        new InstantAction(()-> pincerRoll(posRoll)),
+//                        new SleepAction(0.5),
+//                        new InstantAction(()-> pincerGrab(posGrab))
+//                );
+                return false;
+            }
+        };
     }
 
+    public Action PincerPosition2(double posArm, double posTurn, double posRoll, double posGrab){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                pincerArm(posArm);
+                new SleepAction(0.5);
+                pincerArm(posTurn);
+                new SleepAction(0.5);
+                pincerArm(posRoll);
+                new SleepAction(0.5);
+                pincerArm(posGrab);
+                return false;
+            }
+        };
+    }
 }

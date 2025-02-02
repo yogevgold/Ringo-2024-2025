@@ -18,27 +18,28 @@ public class Values {
     public static final int SECOUND_BAR_HEIGHT_CM = 11;//81
 
 
-    public static final double HOTIZONTAL_SLIDES_OPEN = 0;
-    public static final double HOTIZONTAL_SLIDES_CLOSE = 0.13;
+    public static final double HORIZONTAL_SLIDES_OPEN = 0;
+    public static final double HORIZONTAL_SLIDES_CLOSE = 0.15;
 
 
     public static final double INTAKE_DOWN = 0.2;
-    public static final double INTAKE_CLOSE = 0.75;
+    public static final double INTAKE_CLOSE = 0.8;
     public static final double INTAKE_UP = 0.27;
 
 
-    public static final double ARM_OUT = 0.015;
-    public static final double ARM_IN = 0.06;
+    public static final double ARM_OUT = 0.08;
+    public static final double ARM_IN = 0;
     public static final double ARM_WATING = 0.04;
 
 
     public static final double TURN_IN = 0;
-    public static final double TURN_OUT = 0;
-    public static final double TURN_WATING = 0.08;
+    public static final double TURN_OUT = 0.18;
+    public static final double TURN_WATING = 0.18;
 
 
-    public static final double ROLL_OUT = 0.48;
     public static final double ROLL_IN = 0.82;
+    public static final double ROLL_OUT = 0.48;
+    public static final double ROLL_WATING = 0.82;
 
 
     public static final double GRAB_OPEN = 0.3;
