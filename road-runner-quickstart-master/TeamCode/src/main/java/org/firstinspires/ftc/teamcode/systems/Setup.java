@@ -8,27 +8,51 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.systems.Drive;
-import org.firstinspires.ftc.teamcode.systems.Elevator;
-import org.firstinspires.ftc.teamcode.systems.Intake;
-import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.values.Values;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Setup_tst extends LinearOpMode{
+public class Setup extends LinearOpMode{
     public boolean x=false;
-    Drive drive;
-    Elevator elevator;
-    Intake intake;
+    public Drive drive;
+    public Elevator elevator;
+    public Intake intake;
     public Pincer pincer;
     private FtcDashboard dash;
     private List<Action> runningActions;
 
+    //sleep action
+    public SleepAction sleep03=new SleepAction(0.3);
+    public SleepAction sleep05=new SleepAction(0.5);
 
+    //pincer grab positions
+    public Action pincergrabclose = new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE));
+    public Action pincergrabopen = new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN));
 
+    //pincer roll positions
+    public Action pincerrollin=new InstantAction(()->pincer.pincerRoll(Values.ROLL_IN));
+    public Action pincerrollout=new InstantAction(()->pincer.pincerRoll(Values.ROLL_OUT));
+    public Action pincerrollwaiting=new InstantAction(()->pincer.pincerRoll(Values.ROLL_WATING));
+
+    //pincer turn positions
+    public Action pincerturnin=new InstantAction(()->pincer.pincerRoll(Values.TURN_IN));
+    public Action pincerturnout=new InstantAction(()->pincer.pincerRoll(Values.TURN_OUT));
+    public Action pincerturnwaiting=new InstantAction(()->pincer.pincerRoll(Values.TURN_WATING));
+
+    // pincer arm positions
+    public Action pincerarmin=new InstantAction(()->pincer.pincerRoll(Values.ARM_IN));
+    public Action pincerarmout=new InstantAction(()->pincer.pincerRoll(Values.ARM_OUT));
+    public Action pincerarmwating=new InstantAction(()->pincer.pincerRoll(Values.ARM_WATING));
+
+    //intake slide positions
+    public Action intakeslidesopen=new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN));
+    public Action intakeslidesclose=new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE));
+
+    //intake rotation positions
+    public Action intakeup=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP));
+    public Action intakedown=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN));
+    public Action intakeclose=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE));
 
     Action contActions;
     public List<Action> newActions;// = new ArrayList<>();
@@ -42,7 +66,7 @@ public class Setup_tst extends LinearOpMode{
 
     public void tst2(double a ,double b ,double c, double d) {
         newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(a)),
+                        pincergrabopen,
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerRoll(b)),
                         new SleepAction(0.3),
@@ -53,7 +77,7 @@ public class Setup_tst extends LinearOpMode{
     }
     public void tst() {
         newActions.add(new SequentialAction(
-                new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                pincergrabopen,
                 new SleepAction(0.3),
                 new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
                 new SleepAction(0.3),

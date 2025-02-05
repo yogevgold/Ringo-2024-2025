@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.Pincer;
-import org.firstinspires.ftc.teamcode.systems.Setup_tst;
+
 import org.firstinspires.ftc.teamcode.values.Values;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class actionMergeOneController extends LinearOpMode {
     Elevator elevator;
     Intake intake;
     Pincer pincer;
-    Setup_tst setup_tst;
+
     private FtcDashboard dash;
     private List<Action> runningActions;
 
@@ -47,8 +47,7 @@ public class actionMergeOneController extends LinearOpMode {
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
         pincer = new Pincer(hardwareMap);
-        setup_tst = new Setup_tst();
-        setup_tst.pincer=pincer;
+
         Action contActions;
         waitForStart();
         while (opModeIsActive()) {
@@ -56,10 +55,10 @@ public class actionMergeOneController extends LinearOpMode {
             telemetry.addData("C: ", c);
             telemetry.update();
             List<Action> newActions = new ArrayList<>();
-            setup_tst.newActions = newActions;
+
 
             if(gamepad1.y) {
-                /*newActions.add(new SequentialAction(
+                newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
@@ -67,8 +66,8 @@ public class actionMergeOneController extends LinearOpMode {
                         new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
-                ));*/
-                setup_tst.tst();
+                ));
+
                 elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
             }
 

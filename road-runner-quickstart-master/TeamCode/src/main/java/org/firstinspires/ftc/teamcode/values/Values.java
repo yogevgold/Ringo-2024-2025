@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Values {
+    //pid for elevator
     public static  double P_OF_ELEVATOR = 0.3;
     public static  double I_OF_ELEVATOR = 0.18;
     public static  double D_OF_ELEVATOR = 0.002;
@@ -18,6 +19,7 @@ public class Values {
     public static final int SECOUND_BAR_HEIGHT_CM = 11;//81
 
 
+ //pre made locations for intake and pincer
     public static final double HORIZONTAL_SLIDES_OPEN = 0;
     public static final double HORIZONTAL_SLIDES_CLOSE = 0.15;
 
