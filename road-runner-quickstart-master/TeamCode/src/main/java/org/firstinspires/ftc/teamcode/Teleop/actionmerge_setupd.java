@@ -190,7 +190,7 @@ public class actionmerge_setupd extends LinearOpMode {
 
             if (gamepad1.dpad_down) {
                 intakeOpen = true;
-                newActions.add(setup.intakedown);
+                newActions.add(setup.intakedown   );
             }
 
 

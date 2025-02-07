@@ -54,12 +54,18 @@ public class initialize extends LinearOpMode {
 //                PincerArmLeft.setPosition(0);
 //                PincerArmRight.setPosition(0);
 //                PincerTurn.setPosition(0);
-                PincerRoll.setPosition(0.82);
-            } else if (gamepad1.b) {
+                PincerRoll.setPosition(0.48);
+            }
+
+
+            else if (gamepad1.b) {
 //                PincerArmLeft.setPosition(0.04);
 //                PincerArmRight.setPosition(0.04);
 //                PincerTurn.setPosition(0.18);
-                PincerRoll.setPosition(0.48);
+                PincerRoll.setPosition(0.82);
+
+
+                
             } else if (gamepad1.x) {
 //                PincerArmLeft.setPosition(0.08);
 //                PincerArmRight.setPosition(0.08);

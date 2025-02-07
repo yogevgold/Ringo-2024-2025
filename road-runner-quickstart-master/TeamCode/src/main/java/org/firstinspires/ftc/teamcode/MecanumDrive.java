@@ -45,6 +45,7 @@ import org.firstinspires.ftc.teamcode.messages.DriveCommandMessage;
 import org.firstinspires.ftc.teamcode.messages.MecanumCommandMessage;
 import org.firstinspires.ftc.teamcode.messages.MecanumLocalizerInputsMessage;
 import org.firstinspires.ftc.teamcode.messages.PoseMessage;
+import org.firstinspires.ftc.teamcode.values.DeviceNames;
 
 import java.lang.Math;
 import java.util.Arrays;
@@ -65,7 +66,7 @@ public final class MecanumDrive {
 
         // drive model parameters
         public double inPerTick =0.00296359998 ; //TODO: make sure is good //86.6141732  / 29226
-        public double lateralInPerTick = 0.0016856233242237334; //inPerTick;
+        public double lateralInPerTick = 0.0014483941751978029; //inPerTick;
         public double trackWidthTicks = 3806.73137928886;
 
         // feedforward parameters (in tick units)
@@ -219,10 +220,10 @@ public final class MecanumDrive {
 
         // TODO: make sure your config has motors with these names (or change them)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        leftFront = hardwareMap.get(DcMotorEx.class, "fl");
-        leftBack = hardwareMap.get(DcMotorEx.class, "bl");
-        rightBack = hardwareMap.get(DcMotorEx.class, "br");
-        rightFront = hardwareMap.get(DcMotorEx.class, "fr");
+        leftFront = hardwareMap.get(DcMotorEx.class, DeviceNames.FRONT_LEFT_NAME);
+        leftBack = hardwareMap.get(DcMotorEx.class, DeviceNames.BACK_LEFT_NAME);
+        rightBack = hardwareMap.get(DcMotorEx.class, DeviceNames.BACK_RIGHT_NAME);
+        rightFront = hardwareMap.get(DcMotorEx.class, DeviceNames.FRONT_RIGHT_NAME);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -230,8 +231,8 @@ public final class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // TODO: reverse motor directions if needed
-          leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-          leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+          rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+          rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html

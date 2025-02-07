@@ -87,14 +87,14 @@ public class Elevator {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 pid.setTargetHeight(cm);
-                rightMotor.setPower(-pid.calculate(((double) rightMotor.getCurrentPosition()) /  Values.TICKS_TO_CM_RATION));
-                leftMotor.setPower(-pid.calculate(((double)  leftMotor.getCurrentPosition()) / Values.TICKS_TO_CM_RATION));
+                rightMotor.setPower(pid.calculate(((double) rightMotor.getCurrentPosition()) /  Values.TICKS_TO_CM_RATION));
+                leftMotor.setPower(pid.calculate(((double)  leftMotor.getCurrentPosition()) / Values.TICKS_TO_CM_RATION));
 
-                telemetryPacket.put("LeftPower: ", -pid.calculate((double)  -leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
-                telemetryPacket.put("RightPower: ", -pid.calculate((double) -rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("LeftPower: ", pid.calculate((double)  leftMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("RightPower: ", pid.calculate((double) rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
                 telemetryPacket.put("goalCm: ", cm);
-                telemetryPacket.put("actual left cm: ", (-leftMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
-                telemetryPacket.put("actual right cm: ", (-rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("actual left cm: ", (leftMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
+                telemetryPacket.put("actual right cm: ", (rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
                 return false;
             }
         };

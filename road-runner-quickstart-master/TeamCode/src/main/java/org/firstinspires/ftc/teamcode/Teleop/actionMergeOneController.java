@@ -214,8 +214,7 @@ public class actionMergeOneController extends LinearOpMode {
 
                 contActions = new ParallelAction(
                         drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                        elevator.moveByPower(-gamepad1.right_stick_y),
-//                      elevator.moveCM(elevatorHeightCM),
+                        elevator.moveCM(elevatorHeightCM),
                         intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
                 );
                 TelemetryPacket packet = new TelemetryPacket();
