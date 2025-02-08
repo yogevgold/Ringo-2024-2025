@@ -23,36 +23,36 @@ public class Setup extends LinearOpMode{
     private List<Action> runningActions;
 
     //sleep action
-    public SleepAction sleep03=new SleepAction(0.3);
-    public SleepAction sleep05=new SleepAction(0.5);
+    public SleepAction sleep03 = new SleepAction(0.3);
+    public SleepAction sleep05 = new SleepAction(0.5);
 
     //pincer grab positions
     public Action pincergrabclose = new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE));
     public Action pincergrabopen = new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN));
 
     //pincer roll positions
-    public Action pincerrollin=new InstantAction(()->pincer.pincerRoll(Values.ROLL_IN));
-    public Action pincerrollout=new InstantAction(()->pincer.pincerRoll(Values.ROLL_OUT));
-    public Action pincerrollwaiting=new InstantAction(()->pincer.pincerRoll(Values.ROLL_WATING));
+    public Action pincerrollin = new InstantAction(()->pincer.pincerRoll(Values.ROLL_IN));
+    public Action pincerrollout = new InstantAction(()->pincer.pincerRoll(Values.ROLL_OUT));
+    public Action pincerrollwaiting = new InstantAction(()->pincer.pincerRoll(Values.ROLL_WATING));
 
     //pincer turn positions
-    public Action pincerturnin=new InstantAction(()->pincer.pincerRoll(Values.TURN_IN));
-    public Action pincerturnout=new InstantAction(()->pincer.pincerRoll(Values.TURN_OUT));
-    public Action pincerturnwaiting=new InstantAction(()->pincer.pincerRoll(Values.TURN_WATING));
+    public Action pincerturnin = new InstantAction(()->pincer.pincerTurn(Values.TURN_IN));
+    public Action pincerturnout = new InstantAction(()->pincer.pincerTurn(Values.TURN_OUT));
+    public Action pincerturnwaiting = new InstantAction(()->pincer.pincerTurn(Values.TURN_WATING));
 
     // pincer arm positions
-    public Action pincerarmin=new InstantAction(()->pincer.pincerRoll(Values.ARM_IN));
-    public Action pincerarmout=new InstantAction(()->pincer.pincerRoll(Values.ARM_OUT));
-    public Action pincerarmwating=new InstantAction(()->pincer.pincerRoll(Values.ARM_WATING));
+    public Action pincerarmin = new InstantAction(()->pincer.pincerRoll(Values.ARM_IN));
+    public Action pincerarmout = new InstantAction(()->pincer.pincerRoll(Values.ARM_OUT));
+    public Action pincerarmwating = new InstantAction(()->pincer.pincerRoll(Values.ARM_WATING));
 
     //intake slide positions
-    public Action intakeslidesopen=new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN));
-    public Action intakeslidesclose=new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE));
+    public Action intakeslidesopen = new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN));
+    public Action intakeslidesclose = new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE));
 
     //intake rotation positions
-    public Action intakeup=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP));
-    public Action intakedown=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN));
-    public Action intakeclose=new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE));
+    public Action intakeup = new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP));
+    public Action intakedown = new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN));
+    public Action intakeclose = new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE));
 
     Action contActions;
     public List<Action> newActions;// = new ArrayList<>();
