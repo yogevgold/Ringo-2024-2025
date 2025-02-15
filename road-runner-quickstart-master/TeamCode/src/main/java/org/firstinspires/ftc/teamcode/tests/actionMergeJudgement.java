@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Teleop;
+package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp
-public class actionMergeOneController extends LinearOpMode {
+public class actionMergeJudgement extends LinearOpMode {
     Drive drive;
     Elevator elevator;
     Intake intake;
@@ -42,7 +42,7 @@ public class actionMergeOneController extends LinearOpMode {
         boolean intakeOpen = false;
 
 
-        drive = new Drive(hardwareMap);
+        //drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
         pincer = new Pincer(hardwareMap);
@@ -56,19 +56,19 @@ public class actionMergeOneController extends LinearOpMode {
             List<Action> newActions = new ArrayList<>();
 
 
-            if(gamepad1.y) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
-                ));
-
-                elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
-            }
+//            if(gamepad1.y) {
+//                newActions.add(new SequentialAction(
+//                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
+//                ));
+//
+//                elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
+//            }
 
             if(gamepad1.b) {
                 newActions.add(new SequentialAction(
@@ -83,18 +83,18 @@ public class actionMergeOneController extends LinearOpMode {
                 elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;
             }
 
-            if(gamepad1.x) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
-                ));
-                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
-            }
+//            if(gamepad1.x) {
+//                newActions.add(new SequentialAction(
+//                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
+//                ));
+//                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
+//            }
 
             if(gamepad1.a) {
                 newActions.add(new SequentialAction(
@@ -111,22 +111,22 @@ public class actionMergeOneController extends LinearOpMode {
 
 
 
-            if (gamepad1.dpad_left) {
-                intakeOpen = true;
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_WATING)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
-                        new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
-
-
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
-                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
-                ));
-            }
+//            if (gamepad1.dpad_left) {
+//                intakeOpen = true;
+//                newActions.add(new SequentialAction(
+//                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_WATING)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+//                        new SleepAction(0.3),
+//                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
+//
+//
+//                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
+//                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
+//                ));
+//            }
 
             if (gamepad1.dpad_right) {
                 intakeOpen = false;
@@ -175,52 +175,49 @@ public class actionMergeOneController extends LinearOpMode {
                 ));
             }
 
-            if (gamepad1.dpad_up) {
-                intakeOpen = true;
-                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP)));
-            }
+//            if (gamepad1.dpad_up) {
+//                intakeOpen = true;
+//                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP)));
+//            }
 
-            if (gamepad1.dpad_down) {
-                intakeOpen = true;
-                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN)));
-            }
-
-
-
-            if (gamepad1.right_bumper) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN))
-                ));
-            }
-
-            if (gamepad1.left_bumper) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE))
-                ));
-            }
+//            if (gamepad1.dpad_down) {
+//                intakeOpen = true;
+//                newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN)));
+//            }
 
 
-            if (gamepad1.right_stick_button) {
-                intakeOpen = false;
-                newActions.add(new SequentialAction(
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
-                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
-                ));
-            }
+
+//            if (gamepad1.right_bumper) {
+//                newActions.add(new SequentialAction(
+//                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN))
+//                ));
+//            }
+
+//              if (gamepad1.left_bumper) {
+//                  newActions.add(new SequentialAction(
+//                          new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE))
+//                  ));
+//              }
+
+
+//              if (gamepad1.right_stick_button) {
+//                  intakeOpen = false;
+//                  newActions.add(new SequentialAction(
+//                          new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
+//                          new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
+//                  ));
+//              }
 
 
 
 
                 contActions = new ParallelAction(
-                        drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                        //elevator.moveCM(elevatorHeightCM),
-//                        elevator.moveByPower(gamepad1.right_stick_y),
-//                        elevator.moveByPower(-gamepad1.right_stick_y),
+                        drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, false),
+                        elevator.moveCM(elevatorHeightCM),
+                        elevator.moveByPower(gamepad1.right_trigger),
+                        elevator.moveByPower(-gamepad1.left_trigger),
                         intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
                 );
-                telemetry.addData("RSV: ", gamepad1.right_stick_x);
-                telemetry.update();
-
                 TelemetryPacket packet = new TelemetryPacket();
 
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
@@ -13,30 +14,24 @@ public class initialize extends LinearOpMode {
 
     public Servo PincerArmLeft;
     public Servo PincerArmRight;
-    public ServoImplEx PincerTurn;
-    public ServoImplEx PincerGrab;
-    public ServoImplEx PincerRoll;
+    public Servo PincerTurn;
+    public Servo PincerGrab;
+    public Servo PincerRoll;
     public Servo RightIntake;
     public Servo LeftIntake;
     public Servo LeftHorizontal;
     public Servo RightHorizontal;
-    public ServoImplEx LeftFunnel;
-    public ServoImplEx RightFunnel;
+    public Servo LeftFunnel;
+    public Servo RightFunnel;
 
-    public Servo SERVO_EXPANSION_00;
-    public Servo SERVO_EXPANSION_01;
-    public Servo SERVO_EXPANSION_02;
-    public Servo SERVO_EXPANSION_03;
-    public Servo SERVO_EXPANSION_04;
-    public Servo SERVO_EXPANSION_05;
+    public DcMotor EL;
+    public DcMotor ER;
 
-    public Servo SERVO_CONTROL_03;
-    public Servo SERVO_CONTROL_00;
-    public Servo SERVO_CONTROL_05;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-        PincerGrab= hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_GRAB_NAME);
+        PincerGrab= hardwareMap.get(Servo.class, DeviceNames.PINCER_GRAB_NAME);
         PincerArmLeft = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_LEFT_NAME);
         PincerArmRight = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ARM_RIGHT_NAME);
         PincerRoll = hardwareMap.get(ServoImplEx.class, DeviceNames.PINCER_ROLL_NAME);
@@ -45,33 +40,43 @@ public class initialize extends LinearOpMode {
         LeftIntake = hardwareMap.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
         LeftHorizontal = hardwareMap.get(Servo.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
         RightHorizontal = hardwareMap.get(Servo.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
+        ER = hardwareMap.get(DcMotor.class, DeviceNames.RIGHT_ELEVATOR_NAME);
+        EL = hardwareMap.get(DcMotor.class, DeviceNames.LEFT_ELEVATOR_NAME);
+        LeftIntake.setDirection(Servo.Direction.REVERSE);
         PincerArmLeft.setDirection(Servo.Direction.REVERSE);
+        PincerTurn.setDirection(Servo.Direction.REVERSE);
         LeftHorizontal.setDirection(Servo.Direction.REVERSE);
 
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a) {
-//                PincerArmLeft.setPosition(0);
-//                PincerArmRight.setPosition(0);
-//                PincerTurn.setPosition(0);
-                PincerRoll.setPosition(0.48);
+//                PincerTurn.setPosition(0); //w
+//                PincerArmLeft.setPosition(0.06); //w
+//                PincerArmRight.setPosition(0.06); //w
+//                PincerRoll.setPosition(0.81); //in
+//                PincerGrab.setPosition(0.3); //open
+                LeftIntake.setPosition(0);
+                RightIntake.setPosition(0);
             }
-
-
-            else if (gamepad1.b) {
-//                PincerArmLeft.setPosition(0.04);
-//                PincerArmRight.setPosition(0.04);
-//                PincerTurn.setPosition(0.18);
-                PincerRoll.setPosition(0.82);
-
-
-                
-            } else if (gamepad1.x) {
-//                PincerArmLeft.setPosition(0.08);
-//                PincerArmRight.setPosition(0.08);
-//                PincerTurn.setPosition(0.18);
+            if (gamepad1.b) {
+//                PincerTurn.setPosition(0.16); //out
+//                PincerArmLeft.setPosition(0.09); //out
+//                PincerArmRight.setPosition(0.09); //out
+//                PincerRoll.setPosition(0.46); //out
+//                PincerGrab.setPosition(0); //close
+                LeftIntake.setPosition(0.1);
+                RightIntake.setPosition(0.1);
+            }
+            if (gamepad1.x) {
+//                  PincerArmLeft.setPosition(0); //in
+//                  PincerArmRight.setPosition(0); //in
+//                  PincerTurn.setPosition(0.18);
 //                PincerRoll.setPosition(0.48);
+                LeftIntake.setPosition(0.5);
+                RightIntake.setPosition(0.5);
             }
+            EL.setPower(-gamepad1.left_stick_y);
+            ER.setPower(gamepad1.left_stick_y);
         }
     }
 }

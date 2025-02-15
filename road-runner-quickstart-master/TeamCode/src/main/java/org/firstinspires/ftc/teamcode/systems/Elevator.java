@@ -20,6 +20,9 @@ import org.firstinspires.ftc.teamcode.values.Values;
 @Config
 
 public class Elevator {
+    public static boolean isNear(double a, double b, double tolerance) {
+        return Math.abs(a - b) < tolerance;
+    }
     private DcMotorEx leftMotor;
     private DcMotorEx rightMotor;
     private TouchSensor touchSensor;
@@ -55,23 +58,13 @@ public class Elevator {
         leftMotor.setPower(pow);
         rightMotor.setPower(pow);
     }
+    public  void  stopElevator(){
+        powerMotors(0.0);
+    }
 
     public void setMotorsByLocation(int location) {
         leftMotor.setTargetPosition(location);
         rightMotor.setTargetPosition(location);
-    }
-
-    public Action moveToZero() {
-        return new Action() {
-            @Override
-            public boolean run (@NonNull TelemetryPacket telemetryPacket) {
-                powerMotors(-0.05);
-                if(touchSensor.isPressed()) {
-                    currentHeight = 0;
-                }
-                return touchSensor.isPressed();
-            }
-        };
     }
 
     public Action moveByPower(double pow) {
@@ -96,6 +89,21 @@ public class Elevator {
                 telemetryPacket.put("actual left cm: ", (leftMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
                 telemetryPacket.put("actual right cm: ", (rightMotor.getCurrentPosition() /  Values.TICKS_TO_CM_RATION));
                 return false;
+            }
+        };
+    }
+    public Action moveCMAuto(int cm){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                pid.setTargetHeight(cm);
+                rightMotor.setPower(pid.calculate(((double) rightMotor.getCurrentPosition()) /  Values.TICKS_TO_CM_RATION));
+                leftMotor.setPower(pid.calculate(((double)  leftMotor.getCurrentPosition()) / Values.TICKS_TO_CM_RATION));
+                if(isNear(((double) rightMotor.getCurrentPosition() / Values.TICKS_TO_CM_RATION), cm, 1.75 )){
+                    stopElevator();
+                    return false;
+                }
+                return true;
             }
         };
     }

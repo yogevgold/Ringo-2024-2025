@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp
-public class actionMergeOneController extends LinearOpMode {
+public class actionMergeTwoControllers extends LinearOpMode {
     Drive drive;
     Elevator elevator;
     Intake intake;
@@ -111,7 +111,7 @@ public class actionMergeOneController extends LinearOpMode {
 
 
 
-            if (gamepad1.dpad_left) {
+            if (gamepad2.dpad_left) {
                 intakeOpen = true;
                 newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
@@ -128,7 +128,7 @@ public class actionMergeOneController extends LinearOpMode {
                 ));
             }
 
-            if (gamepad1.dpad_right) {
+            if (gamepad2.x) {
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN)),
@@ -175,32 +175,32 @@ public class actionMergeOneController extends LinearOpMode {
                 ));
             }
 
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 intakeOpen = true;
                 newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP)));
             }
 
-            if (gamepad1.dpad_down) {
+            if (gamepad2.dpad_down) {
                 intakeOpen = true;
                 newActions.add(new InstantAction(()->intake.setIntakeServo(Values.INTAKE_DOWN)));
             }
 
 
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.a) {
                 newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN))
                 ));
             }
 
-            if (gamepad1.left_bumper) {
+            if (gamepad2.b) {
                 newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE))
                 ));
             }
 
 
-            if (gamepad1.right_stick_button) {
+            if (gamepad2.dpad_right) {
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
                         new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
@@ -216,7 +216,7 @@ public class actionMergeOneController extends LinearOpMode {
                         //elevator.moveCM(elevatorHeightCM),
 //                        elevator.moveByPower(gamepad1.right_stick_y),
 //                        elevator.moveByPower(-gamepad1.right_stick_y),
-                        intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
+                        intake.IntakePower(gamepad2.right_trigger - gamepad2.left_trigger)
                 );
                 telemetry.addData("RSV: ", gamepad1.right_stick_x);
                 telemetry.update();

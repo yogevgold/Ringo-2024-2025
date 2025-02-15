@@ -99,11 +99,83 @@ public class Drive {
                 frontRight.setPower((BCPower - finalTurningVal) / finalTurningScale);
                 backRight.setPower((ADPower - finalTurningVal) / finalTurningScale);
 
+                /*
+                    telemetryPacket.addLine("FL: " + (ADPower + finalTurningVal) / finalTurningScale);
+                    telemetryPacket.addLine("BL: " + (BCPower + finalTurningVal) / finalTurningScale);
+                    telemetryPacket.addLine("FR: " + (BCPower - finalTurningVal) / finalTurningScale);
+                    telemetryPacket.addLine("BR: " + (ADPower - finalTurningVal) / finalTurningScale);
+                    telemetryPacket.addLine("Angle: " + finalAngle_t);
+
+                    frontLeft.setPower(move + strafe + turn);
+                    backLeft.setPower(move - strafe + turn);
+                    frontRight.setPower(move - strafe - turn);
+                    backRight.setPower(move + strafe - turn);
+                */
+                return false;
+            }
+        };
+    }
+
+    public Action drive2(double x_val, double y_val, double turn_val, boolean intakeIsOpen, boolean fieldCentric) {
+        double ADPower;
+        double BCPower;
+        double turningVal;
+        double turningScale;
+        double angle_t = 0;
+
+        if (intakeIsOpen) {
+            x_val = x_val / 2;
+            y_val = y_val / 2;
+            turn_val = turn_val / 2;
+        }
+
+        if (fieldCentric) {
+            double angle = Math.atan2(y_val, x_val);
+            double magnitude = Math.hypot(y_val, x_val);
+
+            angle -= getRobotYawRAD();
+
+            ADPower = magnitude * Math.sqrt(2) * 0.5 * (Math.sin(angle) + Math.cos(angle));
+            BCPower = magnitude * Math.sqrt(2) * 0.5 * (Math.sin(angle) - Math.cos(angle));
+            turningScale = Math.max(Math.abs(ADPower + turn_val), Math.abs(ADPower - turn_val));
+            turningScale = Math.max(turningScale, Math.max(Math.abs(BCPower + turn_val), Math.abs(BCPower - turn_val)));
+
+            if (Math.abs(turningScale) < 1.0) {
+                turningScale = 1.0;
+            }
+
+            // turningVal = -turningScale;
+            angle_t = angle;
+        } else {
+            ADPower = y_val + x_val;
+            BCPower = y_val - x_val;
+            turningVal = turn_val;
+            turningScale = 1.0;
+        }
+
+        double finalTurningScale = turningScale;
+        double finalAngle_t = angle_t;
+        turningVal = turn_val;
+        double finalTurningVal = turningVal;
+
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                frontLeft.setPower((ADPower + finalTurningVal) / finalTurningScale);
+                backLeft.setPower((BCPower + finalTurningVal ) / finalTurningScale);
+                frontRight.setPower((BCPower - finalTurningVal) / finalTurningScale);
+                backRight.setPower((ADPower - finalTurningVal ) / finalTurningScale);
+
                 telemetryPacket.addLine("FL: " + (ADPower + finalTurningVal) / finalTurningScale);
                 telemetryPacket.addLine("BL: " + (BCPower + finalTurningVal) / finalTurningScale);
                 telemetryPacket.addLine("FR: " + (BCPower - finalTurningVal) / finalTurningScale);
                 telemetryPacket.addLine("BR: " + (ADPower - finalTurningVal) / finalTurningScale);
                 telemetryPacket.addLine("Angle: " + finalAngle_t);
+
+
+
+
+
 
                 /*
                     frontLeft.setPower(move + strafe + turn);

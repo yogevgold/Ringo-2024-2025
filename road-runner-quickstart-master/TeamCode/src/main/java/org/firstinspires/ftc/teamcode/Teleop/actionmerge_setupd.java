@@ -54,6 +54,9 @@ public class actionmerge_setupd extends LinearOpMode {
         setup.elevator=elevator;
         setup.drive=drive;
         Action contActions;
+
+
+
         waitForStart();
         while (opModeIsActive()) {
             c++;
@@ -70,7 +73,8 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnwaiting,
                         setup.sleep03,
-                        setup.pincerarmwating
+                        setup.pincer_arm_wating
+
                 ));
 
                 elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
@@ -84,7 +88,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnwaiting,
                         setup.sleep03,
-                        setup.pincerarmwating
+                        setup.pincer_arm_wating
                 ));
                 elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;
             }
@@ -97,7 +101,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnwaiting,
                         setup.sleep03,
-                        setup.pincerarmwating
+                        setup.pincer_arm_wating
                 ));
                 elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
             }
@@ -110,7 +114,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnout,
                         setup.sleep03,
-                        setup.pincerarmout
+                        setup.pincer_arm_out
                 ));
                 elevatorHeightCM = 0;
             }
@@ -126,9 +130,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnwaiting,
                         setup.sleep03,
-                        setup.pincerarmwating,
-
-
+                        setup.pincer_arm_wating,
                         setup.intakeslidesopen,
                         setup.intakeup
                 ));
@@ -143,7 +145,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnwaiting,
                         setup.sleep03,
-                        setup.pincerarmwating,
+                        setup.pincer_arm_wating,
 
                         setup.sleep05,
 
@@ -158,7 +160,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerturnin,
                         setup.sleep03,
-                        setup.pincerarmin,
+                        setup.pincer_arm_in,
 
                         setup.sleep05,
 
@@ -173,7 +175,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.pincerturnwaiting,
                         setup.sleep03,
                         setup.intakeslidesopen,
-                        setup.pincerarmwating,
+                        setup.pincer_arm_wating,
 
                         setup.sleep05,
 
@@ -220,7 +222,7 @@ public class actionmerge_setupd extends LinearOpMode {
             contActions = new ParallelAction(
                     drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
                     elevator.moveByPower(-gamepad1.right_stick_y),
-//                      elevator.moveCM(elevatorHeightCM),
+//                  elevator.moveCM(elevatorHeightCM),
                     intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
             );
             TelemetryPacket packet = new TelemetryPacket();

@@ -26,6 +26,7 @@ public class Pincer {
         PincerTurn = map.get(Servo.class, DeviceNames.PINCER_TURN_NAME);
         PincerRoll = map.get(Servo.class, DeviceNames.PINCER_ROLL_NAME);
         PincerArmLeft.setDirection(Servo.Direction.REVERSE);
+        PincerTurn.setDirection(Servo.Direction.REVERSE);
     }
 
     public void pincerArm(double pos) {

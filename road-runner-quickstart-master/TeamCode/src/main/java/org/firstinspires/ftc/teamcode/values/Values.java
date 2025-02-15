@@ -16,32 +16,32 @@ public class Values {
 
     public static final int FIRST_BUCKET_HEIGHT_CM = 36;
     public static final int SECOUND_BUCKET_HEIGHT_CM = 82;//81
-    public static final int SECOUND_BAR_HEIGHT_CM = 11;//81
+    public static final int SECOUND_BAR_HEIGHT_CM = 35;//81
 
 
- //pre made locations for intake and pincer
+ //values for intake
     public static final double HORIZONTAL_SLIDES_OPEN = 0;
-    public static final double HORIZONTAL_SLIDES_CLOSE = 0.15;
+    public static final double HORIZONTAL_SLIDES_CLOSE = 0.2;
 
 
-    public static final double INTAKE_DOWN = 0.2;
-    public static final double INTAKE_CLOSE = 0.8;
-    public static final double INTAKE_UP = 0.27;
+    public static final double INTAKE_DOWN = 0;
+    public static final double INTAKE_CLOSE = 0.55;
+    public static final double INTAKE_UP = 0.1;
 
-
-    public static final double ARM_OUT = 0.08;
+// values for pincer
+    public static final double ARM_OUT = 0.09;
     public static final double ARM_IN = 0;
-    public static final double ARM_WATING = 0.04;
+    public static final double ARM_WATING = 0.06;
 
 
-    public static final double TURN_IN = 0;
-    public static final double TURN_OUT = 0.18;
-    public static final double TURN_WATING = 0.18;
+    public static final double TURN_IN = 0.18;
+    public static final double TURN_OUT = 0.16;
+    public static final double TURN_WATING = 0;
 
 
-    public static final double ROLL_IN = 0.82;
-    public static final double ROLL_OUT = 0.48;
-    public static final double ROLL_WATING = 0.82;
+    public static final double ROLL_IN = 0.81;
+    public static final double ROLL_OUT = 0.46;
+    public static final double ROLL_WATING = 0.81;
 
 
     public static final double GRAB_OPEN = 0.3;

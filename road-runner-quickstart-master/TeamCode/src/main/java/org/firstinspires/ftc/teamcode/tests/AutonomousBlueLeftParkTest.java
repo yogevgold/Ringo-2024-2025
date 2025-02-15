@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autos;
+package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,8 +20,12 @@ public class AutonomousBlueLeftParkTest extends LinearOpMode {
 
         Actions.runBlocking
                 (
-                        drive.actionBuilder(KeyPositions.BLUE_CLOSE_TO_BUCKET_SPAWN) //12, 72, -180
-                                .strafeToConstantHeading(KeyPositions.BLUE_PARKING.component1())
+                        drive.actionBuilder(KeyPositions.BLUE_CLOSE_TO_BUCKET_SPAWN)
+                                .strafeToConstantHeading(KeyPositions.BLUE_LEFT_BAR_POS.position)
+                                .waitSeconds(1)
+                                .strafeToConstantHeading(KeyPositions.BLUE_GRAB_POS.position)
+                                .waitSeconds(1)
+                                .strafeToConstantHeading(KeyPositions.BLUE_LEFT_BAR_POS.position)
                                 .build()
         );
     }
