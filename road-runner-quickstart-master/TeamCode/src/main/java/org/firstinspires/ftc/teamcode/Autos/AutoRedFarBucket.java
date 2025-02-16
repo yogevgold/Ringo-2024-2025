@@ -5,8 +5,6 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.Trajectory;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -17,15 +15,16 @@ import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.values.KeyPositions;
 import org.firstinspires.ftc.teamcode.values.Values;
+
 @Autonomous
-public class AutoFarBucket extends LinearOpMode {
+public class AutoRedFarBucket extends LinearOpMode {
     MecanumDrive drive;
     Elevator elevator;
     Pincer pincer;
     Intake intake;
     @Override
     public void runOpMode() throws InterruptedException {
-        drive = new MecanumDrive(hardwareMap, KeyPositions.BLUE_FAR_FROM_BUCKET_SPAWN);// נקודת התחלה
+        drive = new MecanumDrive(hardwareMap, KeyPositions.RED_FAR_FROM_BUCKET_SPAWN);// נקודת התחלה
         elevator = new Elevator(hardwareMap);
         pincer = new Pincer(hardwareMap);
 //        intake = new Intake(hardwareMap);
@@ -43,19 +42,25 @@ public class AutoFarBucket extends LinearOpMode {
 
 
         Action trajecory1 =//
-                drive.actionBuilder(KeyPositions.BLUE_FAR_FROM_BUCKET_SPAWN) //נקודת התחלה כללית
-                .splineToLinearHeading(KeyPositions.BLUE_RIGHT_BAR_POS,Math.toRadians(30))
+                drive.actionBuilder(KeyPositions.RED_FAR_FROM_BUCKET_SPAWN) //נקודת התחלה כללית
+                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS,Math.toRadians(30))
                 .build();
 
         Action trajectory2 =
-                drive.actionBuilder(KeyPositions.BLUE_RIGHT_BAR_POS) //end of former trajectory (1)
-                .splineToLinearHeading(KeyPositions.BLUE_RIGHT_BAR_POS_BACK,Math.toRadians(30))
+                drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS) //end of former trajectory (1)
+                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_MID,Math.toRadians(30))
                 .build();
 
         Action trajectory3 =
-                drive.actionBuilder(KeyPositions.BLUE_RIGHT_BAR_POS_BACK) //end of former trajectory (2)
-                        .splineToLinearHeading(KeyPositions.BLUE_PARKING,Math.toRadians(30))
+                drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS_MID) //end of former trajectory (2)
+                        .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_BACK,Math.toRadians(30))
                         .build();
+
+        Action trajectory4 =
+                drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS_BACK) //end of former trajectory (3)
+                        .splineToLinearHeading(KeyPositions.RED_PARKING,Math.toRadians(30))
+                        .build();
+
 
         waitForStart();
         sleep(0);
@@ -69,23 +74,29 @@ public class AutoFarBucket extends LinearOpMode {
                                 ,new ParallelAction(
                                         trajecory1
                                         ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM)
+                                        ,holdSpecimen
                                         ,armToBarAction
+                                        ,holdSpecimen
                                 )
 
                                 ,new SleepAction(0.5)
-                                ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM - 9)
-                                ,new SleepAction(0.5)
-
+                                ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM - 10)
+                                ,new SleepAction(3)
 
                                 ,trajectory2
-                                ,elevator.moveCMAuto(0)
-                                ,releaseSpecimen
-
-                                ,new SleepAction(1)
-
+                                ,new SleepAction(3)
+                                ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM + 10)
                                 ,trajectory3
+                                ,new SleepAction(0.8)
+
+                                ,releaseSpecimen
+                                ,elevator.moveCMAuto(0)
+
+                                ,new SleepAction(5)
+
+                                ,trajectory4
                                 , new SleepAction(10)
-                                )
+                        )
                 );
     }
 }

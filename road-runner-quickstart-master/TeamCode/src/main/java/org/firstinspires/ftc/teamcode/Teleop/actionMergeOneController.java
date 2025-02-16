@@ -32,6 +32,8 @@ public class actionMergeOneController extends LinearOpMode {
 
 
 
+
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -66,7 +68,6 @@ public class actionMergeOneController extends LinearOpMode {
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
                 ));
-
                 elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
             }
 
@@ -213,9 +214,9 @@ public class actionMergeOneController extends LinearOpMode {
 
                 contActions = new ParallelAction(
                         drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                        //elevator.moveCM(elevatorHeightCM),
-//                        elevator.moveByPower(gamepad1.right_stick_y),
-//                        elevator.moveByPower(-gamepad1.right_stick_y),
+                        elevator.moveCM(elevatorHeightCM),
+                        //elevator.moveByPower(gamepad1.right_stick_y),
+                        //elevator.moveByPower(-gamepad1.right_stick_y),
                         intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
                 );
                 telemetry.addData("RSV: ", gamepad1.right_stick_x);

@@ -42,7 +42,7 @@ public class initialize extends LinearOpMode {
         RightHorizontal = hardwareMap.get(Servo.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
         ER = hardwareMap.get(DcMotor.class, DeviceNames.RIGHT_ELEVATOR_NAME);
         EL = hardwareMap.get(DcMotor.class, DeviceNames.LEFT_ELEVATOR_NAME);
-        LeftIntake.setDirection(Servo.Direction.REVERSE);
+        RightIntake.setDirection(Servo.Direction.REVERSE);
         PincerArmLeft.setDirection(Servo.Direction.REVERSE);
         PincerTurn.setDirection(Servo.Direction.REVERSE);
         LeftHorizontal.setDirection(Servo.Direction.REVERSE);
@@ -55,8 +55,8 @@ public class initialize extends LinearOpMode {
 //                PincerArmRight.setPosition(0.06); //w
 //                PincerRoll.setPosition(0.81); //in
 //                PincerGrab.setPosition(0.3); //open
-                LeftIntake.setPosition(0);
-                RightIntake.setPosition(0);
+                LeftIntake.setPosition(0.6);
+                RightIntake.setPosition(0.6);
             }
             if (gamepad1.b) {
 //                PincerTurn.setPosition(0.16); //out
@@ -64,19 +64,19 @@ public class initialize extends LinearOpMode {
 //                PincerArmRight.setPosition(0.09); //out
 //                PincerRoll.setPosition(0.46); //out
 //                PincerGrab.setPosition(0); //close
-                LeftIntake.setPosition(0.1);
-                RightIntake.setPosition(0.1);
+                LeftIntake.setPosition(0.5);
+                RightIntake.setPosition(0.5);
             }
             if (gamepad1.x) {
 //                  PincerArmLeft.setPosition(0); //in
 //                  PincerArmRight.setPosition(0); //in
 //                  PincerTurn.setPosition(0.18);
 //                PincerRoll.setPosition(0.48);
-                LeftIntake.setPosition(0.5);
-                RightIntake.setPosition(0.5);
+                LeftIntake.setPosition(0);
+                RightIntake.setPosition(0);
             }
-            EL.setPower(-gamepad1.left_stick_y);
-            ER.setPower(gamepad1.left_stick_y);
+            //EL.setPower(-gamepad1.left_stick_y);
+            //ER.setPower(gamepad1.left_stick_y);
         }
     }
 }
