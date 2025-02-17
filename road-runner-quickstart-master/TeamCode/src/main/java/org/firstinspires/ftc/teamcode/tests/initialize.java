@@ -72,8 +72,8 @@ public class initialize extends LinearOpMode {
 //                  PincerArmRight.setPosition(0); //in
 //                  PincerTurn.setPosition(0.18);
 //                PincerRoll.setPosition(0.48);
-                LeftIntake.setPosition(0);
-                RightIntake.setPosition(0);
+                LeftIntake.setPosition(0.13);
+                RightIntake.setPosition(0.13);
             }
             //EL.setPower(-gamepad1.left_stick_y);
             //ER.setPower(gamepad1.left_stick_y);

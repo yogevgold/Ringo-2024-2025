@@ -86,15 +86,17 @@ public class AutoBlueFarBucket extends LinearOpMode {
                                 ,new SleepAction(3)
 
                                 ,trajectory2
+                                ,holdSpecimen
                                 ,new SleepAction(3)
+                                ,holdSpecimen
                                 ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM + 10)
                                 ,trajectory3
-                                ,new SleepAction(0.8)
+                                ,new SleepAction(2)
 
                                 ,releaseSpecimen
                                 ,elevator.moveCMAuto(0)
 
-                                ,new SleepAction(5)
+                                ,new SleepAction(3)
 
                                 ,trajectory4
                                 , new SleepAction(10)

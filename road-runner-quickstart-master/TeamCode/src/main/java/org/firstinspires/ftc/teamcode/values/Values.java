@@ -16,17 +16,17 @@ public class Values {
 
     public static final int FIRST_BUCKET_HEIGHT_CM = 36;
     public static final int SECOUND_BUCKET_HEIGHT_CM = 82;//81
-    public static final int SECOUND_BAR_HEIGHT_CM = 34;//81
+    public static final int SECOUND_BAR_HEIGHT_CM = 38;//81
 
 
  //values for intake
     public static final double HORIZONTAL_SLIDES_OPEN = 0;
-    public static final double HORIZONTAL_SLIDES_CLOSE = 0.2;
+    public static final double HORIZONTAL_SLIDES_CLOSE = 0.26;
 
 
-    public static final double INTAKE_DOWN = 4;
-    public static final double INTAKE_CLOSE = 0.93;
-    public static final double INTAKE_UP = 5;
+    public static final double INTAKE_DOWN = 0.6;
+    public static final double INTAKE_CLOSE = 0.135;
+    public static final double INTAKE_UP = 0.5;
 
 // values for pincer
     public static final double ARM_OUT = 0.09;

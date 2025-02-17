@@ -66,7 +66,6 @@ public class actionMergeTwoControllers extends LinearOpMode {
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
                 ));
-
                 elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
             }
 
@@ -96,6 +95,32 @@ public class actionMergeTwoControllers extends LinearOpMode {
                 elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
             }
 
+            if(gamepad1.right_bumper) {
+                newActions.add(new SequentialAction(
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
+                ));
+                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM + 10;
+            }
+
+            if(gamepad1.left_bumper) {
+                newActions.add(new SequentialAction(
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
+                ));
+                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM - 10;
+            }
+
             if(gamepad1.a) {
                 newActions.add(new SequentialAction(
                         new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
@@ -121,6 +146,7 @@ public class actionMergeTwoControllers extends LinearOpMode {
                         new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
+                        new SleepAction(0.3),
 
 
                         new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
@@ -188,15 +214,11 @@ public class actionMergeTwoControllers extends LinearOpMode {
 
 
             if (gamepad2.a) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN))
-                ));
+                newActions.add(new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN)));
             }
 
             if (gamepad2.b) {
-                newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE))
-                ));
+                newActions.add(new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)));
             }
 
 
@@ -208,12 +230,9 @@ public class actionMergeTwoControllers extends LinearOpMode {
                 ));
             }
 
-
-
-
                 contActions = new ParallelAction(
                         drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                        //elevator.moveCM(elevatorHeightCM),
+                        elevator.moveCM(elevatorHeightCM),
 //                        elevator.moveByPower(gamepad1.right_stick_y),
 //                        elevator.moveByPower(-gamepad1.right_stick_y),
                         intake.IntakePower(gamepad2.right_trigger - gamepad2.left_trigger)

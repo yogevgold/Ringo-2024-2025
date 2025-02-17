@@ -25,7 +25,6 @@ public class Elevator {
     }
     private DcMotorEx leftMotor;
     private DcMotorEx rightMotor;
-    private TouchSensor touchSensor;
     private ElapsedTime  timer;
     private ElevatorPIDF pid;
 
@@ -75,6 +74,7 @@ public class Elevator {
             }
         };
     }
+
     public Action moveCM(int cm){
         return new Action() {
             @Override
@@ -92,6 +92,7 @@ public class Elevator {
             }
         };
     }
+
     public Action moveCMAuto(int cm){
         return new Action() {
             @Override

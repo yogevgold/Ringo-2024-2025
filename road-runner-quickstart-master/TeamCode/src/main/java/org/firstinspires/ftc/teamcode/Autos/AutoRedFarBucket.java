@@ -43,22 +43,22 @@ public class AutoRedFarBucket extends LinearOpMode {
 
         Action trajecory1 =//
                 drive.actionBuilder(KeyPositions.RED_FAR_FROM_BUCKET_SPAWN) //נקודת התחלה כללית
-                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS,Math.toRadians(30))
+                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS,Math.toRadians(-50))
                 .build();
 
         Action trajectory2 =
                 drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS) //end of former trajectory (1)
-                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_MID,Math.toRadians(30))
+                .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_MID,Math.toRadians(-50))
                 .build();
 
         Action trajectory3 =
                 drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS_MID) //end of former trajectory (2)
-                        .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_BACK,Math.toRadians(30))
+                        .splineToLinearHeading(KeyPositions.RED_RIGHT_BAR_POS_BACK,Math.toRadians(-50))
                         .build();
 
         Action trajectory4 =
                 drive.actionBuilder(KeyPositions.RED_RIGHT_BAR_POS_BACK) //end of former trajectory (3)
-                        .splineToLinearHeading(KeyPositions.RED_PARKING,Math.toRadians(30))
+                        .splineToLinearHeading(KeyPositions.RED_PARKING,Math.toRadians(-50))
                         .build();
 
 
@@ -68,8 +68,8 @@ public class AutoRedFarBucket extends LinearOpMode {
                 (
                         new SequentialAction(
                                 holdSpecimen
-                                ,armToBarAction
-                                ,new SleepAction(0.8)
+                                ,armToBarAction,
+                                new SleepAction(0.8)
 
                                 ,new ParallelAction(
                                         trajecory1
@@ -84,15 +84,17 @@ public class AutoRedFarBucket extends LinearOpMode {
                                 ,new SleepAction(3)
 
                                 ,trajectory2
+                                ,holdSpecimen
                                 ,new SleepAction(3)
+                                ,holdSpecimen
                                 ,elevator.moveCMAuto(Values.SECOUND_BAR_HEIGHT_CM + 10)
                                 ,trajectory3
-                                ,new SleepAction(0.8)
+                                ,new SleepAction(2)
 
                                 ,releaseSpecimen
                                 ,elevator.moveCMAuto(0)
 
-                                ,new SleepAction(5)
+                                ,new SleepAction(3)
 
                                 ,trajectory4
                                 , new SleepAction(10)

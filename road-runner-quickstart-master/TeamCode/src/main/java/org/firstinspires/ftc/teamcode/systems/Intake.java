@@ -51,7 +51,7 @@ public class Intake {
         //RightIntake.setPwmEnable();
 
         leftSlide.setDirection(Servo.Direction.REVERSE);
-        LeftIntake.setDirection(Servo.Direction.REVERSE);
+        RightIntake.setDirection(Servo.Direction.REVERSE);
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 //        pid = new PIDFCoefficients(Values.P_OF_INTAKE, Values.I_OF_INTAKE, Values.D_OF_INTAKE, Values.F_OF_INTAKE);

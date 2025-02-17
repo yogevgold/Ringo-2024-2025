@@ -29,11 +29,6 @@ public class actionMergeOneController extends LinearOpMode {
     private FtcDashboard dash;
     private List<Action> runningActions;
 
-
-
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -122,7 +117,7 @@ public class actionMergeOneController extends LinearOpMode {
                         new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
-
+                        new SleepAction(0.3),
 
                         new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_UP))
@@ -172,7 +167,10 @@ public class actionMergeOneController extends LinearOpMode {
 
                         new SleepAction(0.5),
 
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE))
+                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
+                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
+
+
                 ));
             }
 
@@ -209,10 +207,24 @@ public class actionMergeOneController extends LinearOpMode {
                 ));
             }
 
+            if (gamepad1.left_stick_button) {
+                newActions.add(new SequentialAction(
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_OUT)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+                        new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING))
+                ));
+                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM - 10;
+            }
 
 
 
-                contActions = new ParallelAction(
+
+
+            contActions = new ParallelAction(
                         drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
                         elevator.moveCM(elevatorHeightCM),
                         //elevator.moveByPower(gamepad1.right_stick_y),
