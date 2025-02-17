@@ -162,10 +162,12 @@ public class actionMergeOneController extends LinearOpMode {
                         new SleepAction(0.3),
                         new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
                         new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
                         new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
+                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
 
-                        new SleepAction(0.5),
+                        new SleepAction(0.8),
 
                         new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
                         new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE))
@@ -225,27 +227,27 @@ public class actionMergeOneController extends LinearOpMode {
 
 
             contActions = new ParallelAction(
-                        drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                        elevator.moveCM(elevatorHeightCM),
-                        //elevator.moveByPower(gamepad1.right_stick_y),
-                        //elevator.moveByPower(-gamepad1.right_stick_y),
-                        intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
-                );
-                telemetry.addData("RSV: ", gamepad1.right_stick_x);
-                telemetry.update();
+                    drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
+                    elevator.moveCM(elevatorHeightCM),
+//                        elevator.moveByPower(gamepad1.right_stick_y),
+//                        elevator.moveByPower(-gamepad1.right_stick_y),
+                    intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
+            );
+            telemetry.addData("RSV: ", gamepad1.right_stick_x);
+            telemetry.update();
 
-                TelemetryPacket packet = new TelemetryPacket();
+            TelemetryPacket packet = new TelemetryPacket();
 
 
-                newActions.add(contActions);
-                for (Action action : runningActions) {
-                    action.preview(packet.fieldOverlay());
-                    if (action.run(packet)) {
-                        newActions.add(action);
-                    }
+            newActions.add(contActions);
+            for (Action action : runningActions) {
+                action.preview(packet.fieldOverlay());
+                if (action.run(packet)) {
+                    newActions.add(action);
                 }
-                runningActions = newActions;
-                dash.sendTelemetryPacket(packet);
+            }
+            runningActions = newActions;
+            dash.sendTelemetryPacket(packet);
         }
     }
 }

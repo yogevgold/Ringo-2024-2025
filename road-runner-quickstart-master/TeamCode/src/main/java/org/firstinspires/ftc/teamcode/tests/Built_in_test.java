@@ -69,156 +69,49 @@ public class Built_in_test extends LinearOpMode {
 
             if(gamepad1.y) {
                 newActions.add(new SequentialAction(
+                        //pincer grab
                         setup.pincergrabclose,
                         new SleepAction(1),
                         setup.pincergrabopen,
-                        setup.sleep03,
-                        setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.pincer_arm_wating
-
-                ));
-
-                elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
-            }
-
-            if(gamepad1.b) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose,
-                        setup.sleep03,
-                        setup.pincerrollout,
-                        setup.sleep03,
-                        setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.pincer_arm_wating
-                ));
-                elevatorHeightCM = Values.FIRST_BUCKET_HEIGHT_CM;
-            }
-
-            if(gamepad1.x) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose,
-                        setup.sleep03,
-                        setup.pincerrollout,
-                        setup.sleep03,
-                        setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.pincer_arm_wating
-                ));
-                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
-            }
-
-            if(gamepad1.a) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose,
-                        setup.sleep03,
-                        setup.pincerrollout,
-                        setup.sleep03,
-                        setup.pincerturnout,
-                        setup.sleep03,
-                        setup.pincer_arm_out
-                ));
-                elevatorHeightCM = 0;
-            }
-
-
-
-            if (gamepad1.dpad_left) {
-                intakeOpen = true;
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose,
-                        setup.sleep03,
-                        setup.pincerrollwaiting,
-                        setup.sleep03,
-                        setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.pincer_arm_wating,
-                        setup.intakeslidesopen,
-                        setup.intakeup
-                ));
-            }
-
-            if (gamepad1.dpad_right) {
-                intakeOpen = false;
-                newActions.add(new SequentialAction(
-                        setup.pincergrabopen,
-                        setup.sleep03,
-                        setup.pincerrollwaiting,
-                        setup.sleep03,
-                        setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.pincer_arm_wating,
-
-                        setup.sleep05,
-
-                        setup.intakeslidesclose,
-                        setup.intakeclose,
-
-                        setup.sleep05,
-
-                        setup.pincergrabopen,
-                        setup.sleep03,
+                        new SleepAction(1),
+                        //pincer roll
                         setup.pincerrollin,
-                        setup.sleep03,
-                        setup.pincerturnin,
-                        setup.sleep03,
-                        setup.pincer_arm_in,
-
-                        setup.sleep05,
-
-                        setup.pincergrabclose,
-
-                        setup.sleep03,
-
-                        setup.pincergrabclose,
-                        setup.sleep03,
+                        new SleepAction(1),
+                        setup.pincerrollout,
+                        new SleepAction(1),
                         setup.pincerrollwaiting,
-                        setup.sleep03,
+                        new SleepAction(1),
+                        //pincer turn
+                        setup.pincerturnin,
+                        new SleepAction(1),
+                        setup.pincerturnout,
+                        new SleepAction(1),
                         setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.intakeslidesopen,
+                        new SleepAction(1),
+                        //pincer arm positions
+                        setup.pincer_arm_in,
+                        new SleepAction(1),
+                        setup.pincer_arm_out,
+                        new SleepAction(1),
                         setup.pincer_arm_wating,
-
-                        setup.sleep05,
-
-                        setup.intakeslidesclose
-                ));
-            }
-
-            if (gamepad1.dpad_up) {
-                intakeOpen = true;
-                newActions.add(setup.intakeup);
-            }
-
-            if (gamepad1.dpad_down) {
-                intakeOpen = true;
-                newActions.add(setup.intakedown   );
-            }
-
-
-
-            if (gamepad1.right_bumper) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabopen
-                ));
-            }
-
-            if (gamepad1.left_bumper) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose
-                ));
-            }
-
-
-            if (gamepad1.right_stick_button) {
-                intakeOpen = false;
-                newActions.add(new SequentialAction(
+                        new SleepAction(1),
+                        //intake slides
+                        setup.intakeslidesopen,
+                        new SleepAction(1),
                         setup.intakeslidesclose,
+                        new SleepAction(1),
+                        //intake hight pos
+                        setup.intakeup,
+                        new SleepAction(1),
+                        setup.intakedown,
+                        new SleepAction(1),
                         setup.intakeclose
+
+
                 ));
+
+                //elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
             }
-
-
 
 
             contActions = new ParallelAction(

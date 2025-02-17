@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -21,7 +24,7 @@ import org.firstinspires.ftc.teamcode.values.Values;
 
 
 public class Intake {
-    private final DcMotorEx IntakeMotor;
+    public static DcMotor IntakeMotor;
     public ServoImplEx leftSlide;
     public ServoImplEx rightSlide;
     public ServoImplEx LeftIntake;
@@ -35,7 +38,7 @@ public class Intake {
     }
 
     public Intake(HardwareMap map) {
-        IntakeMotor = map.get(DcMotorEx.class, DeviceNames.INTAKE_MOTOR_NAME);
+        IntakeMotor = map.get(DcMotor.class, DeviceNames.INTAKE_MOTOR_NAME);
         leftSlide = map.get(ServoImplEx.class, DeviceNames.LEFT_HORIZONTAL_SLIDE_NAME);
         rightSlide = map.get(ServoImplEx.class, DeviceNames.RIGHT_HORIZONTAL_SLIDE_NAME);
         LeftIntake = map.get(ServoImplEx.class, DeviceNames.LEFT_INTAKE_SERVO_NAME);
@@ -72,6 +75,10 @@ public class Intake {
         rightSlide.setPosition(val);
     }
 
+    public void IntakeSet0() {
+        IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }
+
     public Action ServoMove(double move){
         return new Action() {
             @Override
@@ -81,11 +88,25 @@ public class Intake {
             }
         };
     }
+    public Action IntakePowerTime(double pow,double time){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                new SequentialAction(
+                        new InstantAction(()-> intakeSpin(pow)),
+                        new SleepAction(time)
+                );
+
+                return false;
+            }
+        };
+    }
+
     public Action IntakePower(double pow){
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                    intakeSpin(pow);
+                intakeSpin(pow);
                 return false;
             }
         };

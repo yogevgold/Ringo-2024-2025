@@ -9,6 +9,8 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
@@ -28,7 +30,7 @@ public class actionMergeTwoControllers extends LinearOpMode {
 
     private FtcDashboard dash;
     private List<Action> runningActions;
-
+    private ElapsedTime IntakeTimer;
 
 
 
@@ -40,12 +42,14 @@ public class actionMergeTwoControllers extends LinearOpMode {
         int c = 0;
         int elevatorHeightCM = 0;
         boolean intakeOpen = false;
-
+        boolean AutoIntake = false;
 
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
         pincer = new Pincer(hardwareMap);
+        IntakeTimer = new ElapsedTime();
+        IntakeTimer.startTime();
 
         Action contActions;
         waitForStart();
@@ -156,49 +160,62 @@ public class actionMergeTwoControllers extends LinearOpMode {
 
             if (gamepad2.x) {
                 intakeOpen = false;
+                //AutoIntake= false;
+                //IntakeTimer.reset();
                 newActions.add(new SequentialAction(
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_OPEN)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_WATING)),
+                        new InstantAction(() -> pincer.pincerRoll(Values.ROLL_WATING)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+                        new InstantAction(() -> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
+                        new InstantAction(() -> pincer.pincerArm(Values.ARM_WATING)),
 
                         new SleepAction(0.5),
 
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
-                        new InstantAction(()->intake.setIntakeServo(Values.INTAKE_CLOSE)),
+                        new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
+                        new InstantAction(() -> intake.setIntakeServo(Values.INTAKE_CLOSE)),
 
                         new SleepAction(0.5),
 
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_OPEN)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_OPEN)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_IN)),
+                        new InstantAction(() -> pincer.pincerRoll(Values.ROLL_IN)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_IN)),
+                        new InstantAction(() -> pincer.pincerTurn(Values.TURN_IN)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_IN)),
+                        new InstantAction(() -> pincer.pincerArm(Values.ARM_IN)),
 
                         new SleepAction(0.5),
 
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
 
                         new SleepAction(0.3),
 
-                        new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerRoll(Values.ROLL_WATING)),
+                        new InstantAction(() -> pincer.pincerRoll(Values.ROLL_WATING)),
                         new SleepAction(0.3),
-                        new InstantAction(()-> pincer.pincerTurn(Values.TURN_WATING)),
+                        new InstantAction(() -> pincer.pincerTurn(Values.TURN_WATING)),
                         new SleepAction(0.3),
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
-                        new InstantAction(()-> pincer.pincerArm(Values.ARM_WATING)),
-
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
                         new SleepAction(0.5),
+//                ));
 
-                        new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE))
-                ));
+//                if (IntakeTimer.seconds() >= 2) {
+//                        intake.IntakeMotor.setPower(-0.3);
+//                }
+
+//                newActions.add(new SequentialAction(
+                        new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
+                        new InstantAction(() -> pincer.pincerArm(Values.ARM_WATING)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
+
+                        new SleepAction(0.8),
+
+                        new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_CLOSE)),
+                        new InstantAction(() -> intake.setIntakeServo(Values.INTAKE_CLOSE))
+                    ));
             }
 
             if (gamepad2.dpad_up) {
