@@ -27,6 +27,7 @@ public class Setup extends LinearOpMode{
     //sleep action
     public SleepAction sleep03 = new SleepAction(0.3);
     public SleepAction sleep05 = new SleepAction(0.5);
+    public SleepAction sleep08 = new SleepAction(0.8);
 
     //pincer grab positions
     public Action pincergrabclose = new InstantAction(()-> pincer.pincerGrab(Values.GRAB_CLOSE));
@@ -43,9 +44,9 @@ public class Setup extends LinearOpMode{
     public Action pincerturnwaiting = new InstantAction(()->pincer.pincerTurn(Values.TURN_WATING));
 
     // pincer arm positions
-    public Action pincer_arm_in = new InstantAction(()->pincer.pincerArm(Values.ARM_IN));
-    public Action pincer_arm_out = new InstantAction(()->pincer.pincerArm(Values.ARM_OUT));
-    public Action pincer_arm_wating = new InstantAction(()->pincer.pincerArm(Values.ARM_WATING));
+    public Action pincerarmin = new InstantAction(()->pincer.pincerArm(Values.ARM_IN));
+    public Action pincerarmout = new InstantAction(()->pincer.pincerArm(Values.ARM_OUT));
+    public Action pincerarmwating = new InstantAction(()->pincer.pincerArm(Values.ARM_WATING));
 
     //intake slide positions
     public Action intakeslidesopen = new InstantAction(()->intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN));
@@ -59,6 +60,7 @@ public class Setup extends LinearOpMode{
     Action contActions;
     public List<Action> newActions;// = new ArrayList<>();
     TelemetryPacket packet = new TelemetryPacket();
+
 
 
 

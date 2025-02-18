@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode.Teleop;
-
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.systems.Drive;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
@@ -16,18 +18,21 @@ import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.systems.Setup;
 import org.firstinspires.ftc.teamcode.values.Values;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp
-public class actionmerge_setupd extends LinearOpMode {
+public class actionmerge2controlers_setuped extends LinearOpMode {
     Drive drive;
     Elevator elevator;
     Intake intake;
     Pincer pincer;
     Setup setup;
+
     private FtcDashboard dash;
     private List<Action> runningActions;
+    private ElapsedTime IntakeTimer;
+
 
 
     @Override
@@ -38,31 +43,32 @@ public class actionmerge_setupd extends LinearOpMode {
         int c = 0;
         int elevatorHeightCM = 0;
         boolean intakeOpen = false;
+        int AutoIntake = 0;
 
-        //new class instances
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
         intake = new Intake(hardwareMap);
         pincer = new Pincer(hardwareMap);
         
-        //setup class instances
+        //setup connections
         setup = new Setup();
         setup.pincer=pincer;
         setup.intake=intake;
         setup.elevator=elevator;
         setup.drive=drive;
-        Action contActions;
         List<Action> newActions = new ArrayList<>();
         setup.newActions = newActions;
+        
+        IntakeTimer = new ElapsedTime();
+        IntakeTimer.startTime();
 
-
+        Action contActions;
         waitForStart();
         while (opModeIsActive()) {
             c++;
             telemetry.addData("C: ", c);
             telemetry.update();
-            
-            
+
 
             if(gamepad1.y) {
                 newActions.add(new SequentialAction(
@@ -73,9 +79,7 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.pincerturnwaiting,
                         setup.sleep03,
                         setup.pincerarmwating
-
                 ));
-
                 elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM;
             }
 
@@ -105,6 +109,32 @@ public class actionmerge_setupd extends LinearOpMode {
                 elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM;
             }
 
+            if(gamepad1.right_bumper) {
+                newActions.add(new SequentialAction(
+                        setup.pincergrabclose,
+                        setup.sleep03,
+                        setup.pincerrollout,
+                        setup.sleep03,
+                        setup.pincerturnwaiting,
+                        setup.sleep03,
+                        setup.pincerarmwating
+                ));
+                elevatorHeightCM = Values.SECOUND_BUCKET_HEIGHT_CM -10;
+            }
+
+            if(gamepad1.left_bumper) {
+                newActions.add(new SequentialAction(
+                        setup.pincergrabclose,
+                        setup.sleep03,
+                        setup.pincerrollout,
+                        setup.sleep03,
+                        setup.pincerturnwaiting,
+                        setup.sleep03,
+                        setup.pincerarmwating
+                ));
+                elevatorHeightCM = Values.SECOUND_BAR_HEIGHT_CM - 10;
+            }
+
             if(gamepad1.a) {
                 newActions.add(new SequentialAction(
                         setup.pincergrabclose,
@@ -120,7 +150,7 @@ public class actionmerge_setupd extends LinearOpMode {
 
 
 
-            if (gamepad1.dpad_left) {
+            if (gamepad2.dpad_left) {
                 intakeOpen = true;
                 newActions.add(new SequentialAction(
                         setup.pincergrabclose,
@@ -130,12 +160,15 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.pincerturnwaiting,
                         setup.sleep03,
                         setup.pincerarmwating,
+                        setup.sleep03,
+
+
                         setup.intakeslidesopen,
                         setup.intakeup
                 ));
             }
 
-            if (gamepad1.dpad_right) {
+            if (gamepad2.x) {
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
                         setup.pincergrabopen,
@@ -171,43 +204,66 @@ public class actionmerge_setupd extends LinearOpMode {
                         setup.sleep03,
                         setup.pincerrollwaiting,
                         setup.sleep03,
+                        setup.pincergrabclose,
+                        setup.sleep05
+                ));
+
+
+//                    newActions.add(new SequentialAction(
+//                            new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
+//                            setup.pincerarmwating,
+//                            setup.pincergrabclose,
+//
+//                            setup.sleep08,
+//
+//                            setup.intakeslidesclose,
+//                            setup.intakeclose
+//                    ));
+
+            }
+
+            if (gamepad2.y) {
+                IntakeTimer.reset();
+                intake.IntakeMotor.setPower(-0.2);
+                if (IntakeTimer.seconds() >= 2) {
+                    intake.IntakeMotor.setPower(0);
+                }
+
+                newActions.add(new SequentialAction(
+                        new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
                         setup.pincerturnwaiting,
-                        setup.sleep03,
-                        setup.intakeslidesopen,
                         setup.pincerarmwating,
+                        setup.pincergrabclose,
 
-                        setup.sleep05,
+                        setup.sleep08,
 
-                        setup.intakeslidesclose
+                        setup.intakeslidesclose,
+                        setup.intakeclose
                 ));
             }
 
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 intakeOpen = true;
                 newActions.add(setup.intakeup);
             }
 
-            if (gamepad1.dpad_down) {
+            if (gamepad2.dpad_down) {
                 intakeOpen = true;
-                newActions.add(setup.intakedown   );
+                newActions.add(setup.intakedown);
             }
 
 
 
-            if (gamepad1.right_bumper) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabopen
-                ));
+            if (gamepad2.a) {
+                newActions.add(setup.pincergrabopen);
             }
 
-            if (gamepad1.left_bumper) {
-                newActions.add(new SequentialAction(
-                        setup.pincergrabclose
-                ));
+            if (gamepad2.b) {
+                newActions.add(setup.pincergrabclose);
             }
 
 
-            if (gamepad1.right_stick_button) {
+            if (gamepad2.dpad_right) {
                 intakeOpen = false;
                 newActions.add(new SequentialAction(
                         setup.intakeslidesclose,
@@ -215,15 +271,16 @@ public class actionmerge_setupd extends LinearOpMode {
                 ));
             }
 
-
-
-
             contActions = new ParallelAction(
                     drive.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, intakeOpen, true),
-                    elevator.moveByPower(-gamepad1.right_stick_y),
-//                  elevator.moveCM(elevatorHeightCM),
-                    intake.IntakePower(gamepad1.right_trigger - gamepad1.left_trigger)
+                    elevator.moveCM(elevatorHeightCM),
+//                        elevator.moveByPower(gamepad1.right_stick_y),
+//                        elevator.moveByPower(-gamepad1.right_stick_y),
+                    intake.IntakePower(gamepad2.right_trigger - gamepad2.left_trigger)
             );
+            telemetry.addData("RSV: ", gamepad1.right_stick_x);
+            telemetry.update();
+
             TelemetryPacket packet = new TelemetryPacket();
 
 
@@ -239,4 +296,3 @@ public class actionmerge_setupd extends LinearOpMode {
         }
     }
 }
-

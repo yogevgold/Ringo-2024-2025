@@ -6,7 +6,6 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -18,7 +17,6 @@ import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.Pincer;
 import org.firstinspires.ftc.teamcode.systems.Setup;
-import org.firstinspires.ftc.teamcode.values.Values;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +68,9 @@ public class Built_in_test extends LinearOpMode {
             if(gamepad1.y) {
                 newActions.add(new SequentialAction(
                         //pincer grab
-                        setup.pincergrabclose,
-                        new SleepAction(1),
                         setup.pincergrabopen,
+                        new SleepAction(1),
+                        setup.pincergrabclose,
                         new SleepAction(1),
                         //pincer roll
                         setup.pincerrollin,
@@ -89,11 +87,11 @@ public class Built_in_test extends LinearOpMode {
                         setup.pincerturnwaiting,
                         new SleepAction(1),
                         //pincer arm positions
-                        setup.pincer_arm_in,
+                        setup.pincerarmin,
                         new SleepAction(1),
-                        setup.pincer_arm_out,
+                        setup.pincerarmout,
                         new SleepAction(1),
-                        setup.pincer_arm_wating,
+                        setup.pincerarmwating,
                         new SleepAction(1),
                         //intake slides
                         setup.intakeslidesopen,

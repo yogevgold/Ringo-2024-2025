@@ -34,8 +34,8 @@ public class Values {
     public static final double ARM_WATING = 0.06;
 
 
-    public static final double TURN_IN = 0.13;
-    public static final double TURN_OUT = 0.16;
+    public static final double TURN_IN = 0.16;
+    public static final double TURN_OUT = 0.143;
     public static final double TURN_WATING = 0;
 
 
