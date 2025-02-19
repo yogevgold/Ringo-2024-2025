@@ -21,22 +21,22 @@ public class Values {
 
  //values for intake
     public static final double HORIZONTAL_SLIDES_OPEN = 0;
-    public static final double HORIZONTAL_SLIDES_CLOSE = 0.25;
+    public static final double HORIZONTAL_SLIDES_CLOSE = 0.2;
 
 
     public static final double INTAKE_DOWN = 0.63;
-    public static final double INTAKE_CLOSE = 0.16;
+    public static final double INTAKE_CLOSE = 0.17;
     public static final double INTAKE_UP = 0.5;
 
 // values for pincer
     public static final double ARM_OUT = 0.09;
-    public static final double ARM_IN = 0.013;
+    public static final double ARM_IN = 0;
     public static final double ARM_WATING = 0.06;
 
 
-    public static final double TURN_IN = 0.16;
-    public static final double TURN_OUT = 0.143;
-    public static final double TURN_WATING = 0;
+    public static final double TURN_IN = 0.8;
+    public static final double TURN_OUT = 0.17;
+    public static final double TURN_WATING = 0.13;
 
 
     public static final double ROLL_IN = 0.81;

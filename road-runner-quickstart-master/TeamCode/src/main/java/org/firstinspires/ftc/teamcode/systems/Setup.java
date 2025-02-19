@@ -25,6 +25,7 @@ public class Setup extends LinearOpMode{
 
 
     //sleep action
+    public SleepAction sleep02 = new SleepAction(0.2);
     public SleepAction sleep03 = new SleepAction(0.3);
     public SleepAction sleep05 = new SleepAction(0.5);
     public SleepAction sleep08 = new SleepAction(0.8);

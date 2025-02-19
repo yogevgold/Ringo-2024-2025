@@ -186,16 +186,14 @@ public class actionMergeTwoControllers extends LinearOpMode {
 
                         new SleepAction(0.5),
 
-                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_OPEN)),
 
                         new SleepAction(0.3),
 
-                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
+                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_OPEN)),
                         new SleepAction(0.3),
                         new InstantAction(() -> pincer.pincerRoll(Values.ROLL_WATING)),
-                        new SleepAction(0.3),
-                        new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
-                        new SleepAction(0.5)
+                        new SleepAction(0.3)
                 ));
 
 
@@ -214,13 +212,15 @@ public class actionMergeTwoControllers extends LinearOpMode {
 
             if (gamepad2.y) {
                 IntakeTimer.reset();
-                intake.IntakeMotor.setPower(-0.2);
-                if (IntakeTimer.seconds() >= 2) {
+                intake.IntakeMotor.setPower(-0.3);
+                if (IntakeTimer.seconds() >= 4) {
                     intake.IntakeMotor.setPower(0);
                 }
 
                 newActions.add(new SequentialAction(
+                            new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),
                             new InstantAction(() -> intake.horizontalslides(Values.HORIZONTAL_SLIDES_OPEN)),
+                            new SleepAction(0.2),
                             new InstantAction(() -> pincer.pincerTurn(Values.TURN_WATING)),
                             new InstantAction(() -> pincer.pincerArm(Values.ARM_WATING)),
                             new InstantAction(() -> pincer.pincerGrab(Values.GRAB_CLOSE)),

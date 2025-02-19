@@ -44,36 +44,37 @@ public class initialize extends LinearOpMode {
         EL = hardwareMap.get(DcMotor.class, DeviceNames.LEFT_ELEVATOR_NAME);
         RightIntake.setDirection(Servo.Direction.REVERSE);
         PincerArmLeft.setDirection(Servo.Direction.REVERSE);
-        PincerTurn.setDirection(Servo.Direction.REVERSE);
         LeftHorizontal.setDirection(Servo.Direction.REVERSE);
+        PincerTurn.setDirection(Servo.Direction.REVERSE);
+
 
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a) {
-//                PincerTurn.setPosition(0); //w
-//                PincerArmLeft.setPosition(0.06); //w
-//                PincerArmRight.setPosition(0.06); //w
+                PincerTurn.setPosition(0); //w
+//                PincerArmLeft.setPosition(0); //w
+//                PincerArmRight.setPosition(0); //w
 //                PincerRoll.setPosition(0.81); //in
 //                PincerGrab.setPosition(0.3); //open
-                LeftIntake.setPosition(0.6);
-                RightIntake.setPosition(0.6);
+//                LeftIntake.setPosition(0.6);
+//                RightIntake.setPosition(0.6);
             }
             if (gamepad1.b) {
-//                PincerTurn.setPosition(0.16); //out
+                PincerTurn.setPosition(0.16); //out
 //                PincerArmLeft.setPosition(0.09); //out
 //                PincerArmRight.setPosition(0.09); //out
 //                PincerRoll.setPosition(0.46); //out
 //                PincerGrab.setPosition(0); //close
-                LeftIntake.setPosition(0.5);
-                RightIntake.setPosition(0.5);
+//                LeftIntake.setPosition(0.5);
+//                RightIntake.setPosition(0.5);
             }
             if (gamepad1.x) {
 //                  PincerArmLeft.setPosition(0); //in
 //                  PincerArmRight.setPosition(0); //in
-//                  PincerTurn.setPosition(0.18);
+                  PincerTurn.setPosition(0.18);
 //                PincerRoll.setPosition(0.48);
-                LeftIntake.setPosition(0.13);
-                RightIntake.setPosition(0.13);
+//                LeftIntake.setPosition(0.13);
+//                RightIntake.setPosition(0.13);
             }
             //EL.setPower(-gamepad1.left_stick_y);
             //ER.setPower(gamepad1.left_stick_y);
